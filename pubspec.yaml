@@ -1,0 +1,48 @@
+name: crestaurant2
+description: Submission Fundamental Flutter
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_native_splash: ^2.2.9
+  flutter_svg: ^1.1.4
+  page_transition: ^2.0.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data/
+    - assets/icons/
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/gsBlack.ttf
+        - asset: assets/fonts/gsBlackItalic.ttf
+        - asset: assets/fonts/gsBold.ttf
+        - asset: assets/fonts/gsBoldItalic.ttf
+        - asset: assets/fonts/gsItalic.ttf
+        - asset: assets/fonts/gsLightItalic.ttf
+        - asset: assets/fonts/gsMedium.ttf
+        - asset: assets/fonts/gsMediumItalic.ttf
+        - asset: assets/fonts/gsRegular.ttf
+        - asset: assets/fonts/gsThin.ttf
+        - asset: assets/fonts/gsThinItalic.ttf
+flutter_native_splash:
+  color: '#FFFFFF'
+  fullscreen: true
+  image: assets/images/logo_splash_screen.png
