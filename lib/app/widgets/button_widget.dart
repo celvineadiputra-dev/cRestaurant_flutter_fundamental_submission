@@ -27,7 +27,15 @@ class ButtonWidget extends StatelessWidget {
           backgroundColor: bgColor,
           padding: EdgeInsets.symmetric(vertical: verticalPadding),
         ),
-        child: Text(label),
+        child: isLoading
+            ? const SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : Text(label),
       ),
     );
   }

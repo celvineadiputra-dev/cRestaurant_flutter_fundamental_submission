@@ -12,4 +12,6 @@ const fastFood = 'assets/icons/fastFood.svg';
 const dietFood = 'assets/icons/dietFood.svg';
 const utensils = 'assets/icons/utensils.svg';
 const star = 'assets/icons/star.svg';
+const user = 'assets/icons/user.svg';
 const love = 'assets/icons/love.svg';
+const focus = 'assets/images/interaction_design_amico.svg';

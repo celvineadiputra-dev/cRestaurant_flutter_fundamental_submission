@@ -1,8 +1,11 @@
+import 'package:crestaurant2/app/main/main_screen.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/app/widgets/button_widget.dart';
+import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
 import 'package:crestaurant2/app/widgets/password_form_field_widget.dart';
 import 'package:crestaurant2/app/widgets/text_form_field_widget.dart';
+import 'package:crestaurant2/services/auth_service.dart';
 import 'package:crestaurant2/utils/input_validation_util.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
@@ -124,6 +127,8 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
   final emailController = TextEditingController(text: "");
   final passwordController = TextEditingController(text: "");
 
+  late bool isLoading = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -183,15 +188,63 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
-                    ?.copyWith(
-                    color: dark, fontWeight: FontWeight.w500),
+                    ?.copyWith(color: dark, fontWeight: FontWeight.w500),
               )
             ],
           ),
           const SizedBox(
             height: 40,
           ),
-          ButtonWidget(onPress: (){}, label: "Sign In"),
+          ButtonWidget(
+            onPress: () {
+              if (_formKey.currentState!.validate()) {
+                try {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  AuthService()
+                      .login(context, emailController.text,
+                          passwordController.text)
+                      .then((value) {
+                    if (value) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.pushReplacementNamed(context, '/main');
+                    } else {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.transparent,
+                          content: CustomSnackBarContentWidget(
+                            type: "error",
+                            label: "Email or password doesn't match",
+                          ),
+                        ),
+                      );
+                    }
+                  });
+                } catch (e) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.transparent,
+                      content: CustomSnackBarContentWidget(
+                        type: "error",
+                        label: "Error Code",
+                      ),
+                    ),
+                  );
+                }
+              }
+            },
+            label: "Sign In",
+            isLoading: isLoading,
+          ),
           const SizedBox(
             height: 10,
           ),
