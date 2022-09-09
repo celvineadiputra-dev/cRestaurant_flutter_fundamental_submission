@@ -1,3 +1,4 @@
+import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,46 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
+      body: SafeArea(
+          child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        child: Column(
+          children: const [MenuItem()],
+        ),
+      )),
+    );
+  }
+}
+
+class MenuItem extends StatelessWidget {
+  const MenuItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        MenuWidget(
+          label: "Vouchers",
+          color: ambrosiaIvory,
+          icon: voucher,
+        ),
+        MenuWidget(
+          label: "Dessert",
+          color: lilyWhite,
+          icon: ice,
+        ),
+        MenuWidget(
+          label: "Fast food",
+          color: earlyDawn,
+          icon: fastFood,
+        ),
+        MenuWidget(
+          label: "Diet food",
+          color: feta,
+          icon: dietFood,
+        ),
+      ],
     );
   }
 }
