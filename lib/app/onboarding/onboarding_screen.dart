@@ -21,6 +21,7 @@ class OnBoardingScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Spacer(),
                 SvgPicture.asset(
                   food,
                   height: 190,
@@ -37,9 +38,7 @@ class OnBoardingScreen extends StatelessWidget {
                       ?.copyWith(fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const Spacer(),
                 ButtonWidget(
                   onPress: () {
                     Navigator.push(

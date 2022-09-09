@@ -65,7 +65,7 @@ class SignInScreen extends StatelessWidget {
           color: dark,
         ),
         onPressed: () {
-          Navigator.push(
+          Navigator.pop(
             context,
             PageTransition(
                 child: const OnBoardingScreen(),
