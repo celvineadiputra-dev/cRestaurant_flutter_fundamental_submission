@@ -11,19 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  // var overlayStyle = SystemUiOverlayStyle(
-  //   statusBarColor: primary,
-  //   statusBarIconBrightness: Brightness.dark,
-  //   statusBarBrightness:
-  //       Platform.isAndroid ? Brightness.dark : Brightness.light,
-  //   systemNavigationBarColor: primary,
-  //   systemNavigationBarDividerColor: primary,
-  //   systemNavigationBarIconBrightness: Brightness.dark,
-  // );
-  //
-  // SystemChrome.setSystemUIOverlayStyle(overlayStyle);
-  // SystemChrome.setSystemUIOverlayStyle(
-  //     SystemUiOverlayStyle(statusBarColor: primary));
   runApp(const MyApp());
 }
 
@@ -44,7 +31,7 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: elevatedButtonTheme,
       ),
       routes: {
-        '/': (context) => const OnBoardingScreen(),
+        '/': (context) => const MainScreen(),
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/main': (context) => const MainScreen()
