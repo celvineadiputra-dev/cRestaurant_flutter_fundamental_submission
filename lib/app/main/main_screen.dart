@@ -3,6 +3,7 @@ import 'package:crestaurant2/app/home/home_screen.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,10 +17,10 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   List<Widget> widgetPages = [
-    HomeScreen(),
-    ComingSoonScreen(),
-    ComingSoonScreen(),
-    ComingSoonScreen(),
+    const HomeScreen(),
+    const ComingSoonScreen(),
+    const ComingSoonScreen(),
+    const ComingSoonScreen(),
   ];
 
   void _onItemTap(int index) {
@@ -30,6 +31,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: primary,
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
     return Scaffold(
       body: SafeArea(
         child: widgetPages[_selectedIndex],
@@ -45,12 +52,12 @@ class _MainScreenState extends State<MainScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 10,
           child: SizedBox(
             height: 60,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

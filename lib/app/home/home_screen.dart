@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           // padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           child: Column(
-            children: [
+            children: const [
               SuggestRestaurant(),
               MenuItem(),
               SizedBox(
@@ -205,7 +205,7 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                   itemActive: _itemSlideActive)
             ],
           )
-        : loading();
+        : const Loading();
   }
 
   Widget indicatorSlide({required int itemCount, required int itemActive}) {
@@ -228,8 +228,8 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
   }
 }
 
-class loading extends StatelessWidget {
-  const loading({
+class Loading extends StatelessWidget {
+  const Loading({
     Key? key,
   }) : super(key: key);
 
@@ -341,9 +341,9 @@ class _PopularRestaurantState extends State<PopularRestaurant> {
       future: RestaurantService().getPopularRestaurant(context),
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          return const loading();
+          return const Loading();
         } else if (snapshot.hasError) {
-          return const loading();
+          return const Loading();
         } else if (snapshot.hasData) {
           return SizedBox(
             height: 170,
@@ -368,7 +368,7 @@ class _PopularRestaurantState extends State<PopularRestaurant> {
             ),
           );
         } else {
-          return const loading();
+          return const Loading();
         }
       },
     );
@@ -461,9 +461,9 @@ class _HottestDiscountState extends State<HottestDiscount> {
       future: RestaurantService().getHottestRestaurant(context),
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          return const loading();
+          return const Loading();
         } else if (snapshot.hasError) {
-          return const loading();
+          return const Loading();
         } else if (snapshot.hasData) {
           return ListView.separated(
             scrollDirection: Axis.vertical,
@@ -486,7 +486,7 @@ class _HottestDiscountState extends State<HottestDiscount> {
             itemCount: snapshot.data!.length,
           );
         } else {
-          return const loading();
+          return const Loading();
         }
       },
     );

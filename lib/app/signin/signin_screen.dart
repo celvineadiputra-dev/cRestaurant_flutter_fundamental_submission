@@ -1,4 +1,3 @@
-import 'package:crestaurant2/app/main/main_screen.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/app/widgets/button_widget.dart';
@@ -47,7 +46,7 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              FormSignIn()
+              const FormSignIn()
             ],
           ),
         ),
@@ -150,7 +149,7 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
               if (isEmailValid(val!)) {
                 return null;
               }
-              return "Email is valid";
+              return "Email is not valid";
             },
           ),
           const SizedBox(

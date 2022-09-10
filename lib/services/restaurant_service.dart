@@ -17,8 +17,9 @@ class RestaurantService {
       Random random = Random();
       for (var i = 0; i < 4; i++) {
         int randomNumber = random.nextInt(data['restaurants'].length);
-        if(!listNumber.contains(randomNumber)){
-          Restaurant model = Restaurant.fromMap(data['restaurants'][randomNumber]);
+        if (!listNumber.contains(randomNumber)) {
+          Restaurant model =
+              Restaurant.fromMap(data['restaurants'][randomNumber]);
           listRestaurant.add(model);
           listNumber.add(randomNumber);
         }
@@ -38,7 +39,7 @@ class RestaurantService {
       final data = json.decode(response);
       List<Restaurant> listRestaurant = [];
 
-      for(var i = 0; i < 5; i++){
+      for (var i = 0; i < 5; i++) {
         Restaurant model = Restaurant.fromMap(data['restaurants'][i]);
         listRestaurant.add(model);
       }
@@ -57,12 +58,42 @@ class RestaurantService {
       final data = json.decode(response);
       List<Restaurant> listRestaurant = [];
 
-      for(var i = 5; i < data['restaurants'].length; i++){
+      for (var i = 5; i < data['restaurants'].length; i++) {
         Restaurant model = Restaurant.fromMap(data['restaurants'][i]);
         listRestaurant.add(model);
       }
 
       return listRestaurant;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<List<Restaurant>?> findRestaurant(
+      {required BuildContext context, required String value}) async {
+    try {
+      final String response = await DefaultAssetBundle.of(context)
+          .loadString("assets/data/local_restaurant.json");
+
+      final data = json.decode(response);
+      List<Restaurant> listRestaurant = [];
+
+      if (!value.isNotEmpty) {
+        return listRestaurant;
+      }
+
+      data['restaurants'].map((item) {
+        Restaurant model = Restaurant.fromMap(item);
+        listRestaurant.add(model);
+      }).toList();
+
+      List<Restaurant> result = listRestaurant.isNotEmpty
+          ? listRestaurant.where((element) {
+              return element.name.toLowerCase().contains(value.toLowerCase());
+            }).toList()
+          : [];
+
+      return result;
     } catch (e) {
       throw Exception(e);
     }

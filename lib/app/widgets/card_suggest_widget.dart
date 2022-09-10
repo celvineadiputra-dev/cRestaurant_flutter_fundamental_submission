@@ -45,7 +45,7 @@ class CardSuggestWidget extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.2),
                   spreadRadius: 0.1,
                   blurRadius: 1,
-                  offset: Offset(0, 1),
+                  offset: const Offset(0, 1),
                 )
               ],
             ),
