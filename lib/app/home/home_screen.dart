@@ -1,3 +1,4 @@
+import 'package:crestaurant2/app/detail/detail_screen.dart';
 import 'package:crestaurant2/app/widgets/card_popular_widget.dart';
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
@@ -188,11 +189,16 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                   controller: controller,
                   itemBuilder: (context, index) {
                     Restaurant data = suggestRestaurant![index];
-                    return CardSuggestWidget(
-                      image: data.pictureId,
-                      name: data.name,
-                      rating: data.rating,
-                      city: data.city,
+                    return InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(data : data)));
+                      },
+                      child: CardSuggestWidget(
+                        image: data.pictureId,
+                        name: data.name,
+                        rating: data.rating,
+                        city: data.city,
+                      ),
                     );
                   },
                   itemCount: suggestRestaurant.length,
