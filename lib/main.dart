@@ -1,5 +1,6 @@
 import 'package:crestaurant2/app/main/main_screen.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
+import 'package:crestaurant2/app/search/search_screen.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/themes/button_theme.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const OnBoardingScreen(),
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
-        '/main': (context) => const MainScreen()
+        '/main': (context) => const MainScreen(),
+        '/search': (context) => const SearchScreen()
       },
     );
   }
