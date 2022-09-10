@@ -1,10 +1,20 @@
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CardSuggestWidget extends StatelessWidget {
-  const CardSuggestWidget({Key? key}) : super(key: key);
+  final String image, name, city;
+  final double rating;
+
+  const CardSuggestWidget(
+      {Key? key,
+      required this.image,
+      required this.name,
+      required this.rating,
+      required this.city})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +24,8 @@ class CardSuggestWidget extends StatelessWidget {
           height: 220,
           margin: const EdgeInsets.only(right: 5, left: 5),
           decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: NetworkImage(
-                    "https://restaurant-api.dicoding.dev/images/medium/15"),
+              image: DecorationImage(
+                image: NetworkImage(image),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(25)),
@@ -45,7 +54,7 @@ class CardSuggestWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Kafein",
+                  name,
                   style: Theme.of(context)
                       .textTheme
                       .bodyText2
@@ -54,21 +63,31 @@ class CardSuggestWidget extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Wrap(
-                      children: List.generate(
-                        5,
-                        (index) => SvgPicture.asset(
-                          star,
-                          width: 12,
-                          color: orange,
-                        ),
-                      ),
+                    RatingBar(
+                      initialRating: rating,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 15,
+                      ratingWidget: RatingWidget(
+                          full: const Icon(
+                            Icons.star,
+                            color: orange,
+                          ),
+                          half: const Icon(
+                            Icons.star_half,
+                            color: orange,
+                          ),
+                          empty: const Icon(
+                            Icons.star_border,
+                            color: grey1,
+                          )),
+                      onRatingUpdate: (double value) {},
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      "5.0",
+                      rating.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
@@ -76,7 +95,9 @@ class CardSuggestWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     SvgPicture.asset(
@@ -84,9 +105,11 @@ class CardSuggestWidget extends StatelessWidget {
                       width: 18,
                       color: grey1,
                     ),
-                    const SizedBox(width: 5,),
+                    const SizedBox(
+                      width: 5,
+                    ),
                     Text(
-                      "City",
+                      city,
                       style: Theme.of(context)
                           .textTheme
                           .button

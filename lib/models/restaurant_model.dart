@@ -9,7 +9,7 @@ class Restaurant {
     required this.pictureId,
     required this.city,
     required this.rating,
-    required this.menus,
+    // required this.menus,
   });
 
   final String id;
@@ -18,7 +18,8 @@ class Restaurant {
   final String pictureId;
   final String city;
   final double rating;
-  final Menus menus;
+
+  // final Menus menus;
 
   factory Restaurant.fromJson(String str) =>
       Restaurant.fromMap(json.decode(str));
@@ -32,7 +33,9 @@ class Restaurant {
         pictureId: json["pictureId"],
         city: json["city"],
         rating: json["rating"].toDouble(),
-        menus: Menus.fromMap(json["menus"]),
+        // menus: Menus.fromMap(
+        //   json["menus"],
+        // ),
       );
 
   Map<String, dynamic> toMap() => {
@@ -42,6 +45,6 @@ class Restaurant {
         "pictureId": pictureId,
         "city": city,
         "rating": rating,
-        "menus": menus.toMap(),
+        // "menus": menus.toMap(),
       };
 }
