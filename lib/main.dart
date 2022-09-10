@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         elevatedButtonTheme: elevatedButtonTheme,
       ),
       routes: {
-        '/': (context) => const OnBoardingScreen(),
+        '/': (context) => const MainScreen(),
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/main': (context) => const MainScreen(),

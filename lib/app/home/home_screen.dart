@@ -23,10 +23,9 @@ class HomeScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context),
       body: SafeArea(
         child: SingleChildScrollView(
-          // padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           child: Column(
             children: const [
               SuggestRestaurant(),
@@ -46,7 +45,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget appBar() {
+  PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: primary,
@@ -59,8 +58,7 @@ class HomeScreen extends StatelessWidget {
           cursorColor: primary,
           readOnly: true,
           onTap: () {
-            // Navigator.of(context)
-            //     .push(RouteAnimationBottomUp(screen: const SearchPage()));
+            Navigator.pushNamed(context, '/search');
           },
           style: const TextStyle(fontSize: 12),
           decoration: InputDecoration(

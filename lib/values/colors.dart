@@ -15,6 +15,7 @@ const acidGreen = Color(0xffbedf00);
 const seaBlue = Color(0xff3a86ff);
 const lipstickRed = Color(0xffFF0054);
 const grey1 = Color(0xffc0c1c7);
+const grey2 = Color(0xfff8f9fa);
 const dark = Color(0xff0d1b2a);
 const rockBottom = Color(0xff494B4A);
 

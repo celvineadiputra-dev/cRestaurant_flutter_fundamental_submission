@@ -87,13 +87,29 @@ class RestaurantService {
         listRestaurant.add(model);
       }).toList();
 
-      List<Restaurant> result = listRestaurant.isNotEmpty
-          ? listRestaurant.where((element) {
-              return element.name.toLowerCase().contains(value.toLowerCase());
-            }).toList()
-          : [];
+      List<Restaurant> result = [];
 
-      return result;
+      listRestaurant.map((item) {
+        final String search = value.toLowerCase();
+        if (item.name.toLowerCase() == search) {
+          result.add(item);
+        }
+        item.menus.foods.map((food) {
+          if (food.name.toLowerCase() == search) {
+            result.add(item);
+          }
+        }).toList();
+
+        item.menus.drinks.map((drink) {
+          if (drink.name.toLowerCase() == search) {
+            result.add(item);
+          }
+        }).toList();
+      }).toList();
+
+      return Future.delayed(Duration(seconds: 2), () {
+        return result;
+      });
     } catch (e) {
       throw Exception(e);
     }
