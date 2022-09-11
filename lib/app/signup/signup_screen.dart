@@ -139,16 +139,16 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
       child: Column(
         children: [
           TextFormFieldWidget(
-          valueController: nameController,
-          label: "User Name",
-          textInputType: TextInputType.name,
-          validator: (val) {
-            if (isNameValid(val!)) {
-              return null;
-            }
-            return "User Name is not valid";
-          },
-        ),
+            valueController: nameController,
+            label: "User Name",
+            textInputType: TextInputType.name,
+            validator: (val) {
+              if (isNameValid(val!)) {
+                return null;
+              }
+              return "User Name is not valid";
+            },
+          ),
           const SizedBox(
             height: 20,
           ),

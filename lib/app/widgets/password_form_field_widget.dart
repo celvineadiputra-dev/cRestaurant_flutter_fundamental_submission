@@ -3,7 +3,6 @@ import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class PasswordFormFieldWidget extends StatefulWidget {
   final TextEditingController valueController;
   final String label;
@@ -39,7 +38,7 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
       decoration: InputDecoration(
         hintText: widget.label,
         hintStyle:
-        Theme.of(context).textTheme.bodyText1?.copyWith(color: grey1),
+            Theme.of(context).textTheme.bodyText1?.copyWith(color: grey1),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(width: 2, color: grey1),
           borderRadius: BorderRadius.circular(15),
@@ -65,13 +64,13 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
           },
           icon: _isObscureText
               ? SvgPicture.asset(
-            eye,
-            color: grey1,
-          )
+                  eye,
+                  color: grey1,
+                )
               : SvgPicture.asset(
-            eyeSlash,
-            color: grey1,
-          ),
+                  eyeSlash,
+                  color: grey1,
+                ),
         ),
       ),
     );

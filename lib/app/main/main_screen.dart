@@ -4,6 +4,7 @@ import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -35,7 +36,13 @@ class _MainScreenState extends State<MainScreen> {
         child: widgetPages[_selectedIndex],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Fluttertoast.showToast(
+            msg: "Coming Soon",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+          );
+        },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         backgroundColor: safetyOrangeBlazeOrange,
         child: SvgPicture.asset(

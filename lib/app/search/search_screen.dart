@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../models/restaurant_model.dart';
+import '../detail/detail_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -162,11 +163,21 @@ class _SearchState extends State<Search> {
                   ? ListView.separated(
                       itemBuilder: (BuildContext context, int index) {
                         Restaurant data = listRestaurant![index];
-                        return CardRestoWidget(
-                          image: data.pictureId,
-                          name: data.name,
-                          city: data.city,
-                          rating: data.rating,
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailScreen(data: data),
+                              ),
+                            );
+                          },
+                          child: CardRestoWidget(
+                            image: data.pictureId,
+                            name: data.name,
+                            city: data.city,
+                            rating: data.rating,
+                          ),
                         );
                       },
                       separatorBuilder: (BuildContext context, _) {

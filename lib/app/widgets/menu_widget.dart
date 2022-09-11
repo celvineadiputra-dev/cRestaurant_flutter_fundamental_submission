@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MenuWidget extends StatelessWidget {
   final String label, icon;
@@ -12,7 +13,13 @@ class MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Fluttertoast.showToast(
+          msg: "Coming Soon",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+        );
+      },
       child: Column(
         children: [
           Container(

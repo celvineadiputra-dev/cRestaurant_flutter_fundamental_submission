@@ -27,9 +27,11 @@ class MyApp extends StatelessWidget {
         primaryColor: primary,
         scaffoldBackgroundColor: Colors.white,
         elevatedButtonTheme: elevatedButtonTheme,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent
       ),
       routes: {
-        '/': (context) => const MainScreen(),
+        '/': (context) => const OnBoardingScreen(),
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/main': (context) => const MainScreen(),

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-class Drink {
-  Drink({
+class ItemMenuModel {
+  ItemMenuModel({
     required this.name,
   });
 
   final String name;
 
-  factory Drink.fromJson(String str) => Drink.fromMap(json.decode(str));
+  factory ItemMenuModel.fromJson(String str) => ItemMenuModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Drink.fromMap(Map<String, dynamic> json) => Drink(
+  factory ItemMenuModel.fromMap(Map<String, dynamic> json) => ItemMenuModel(
         name: json["name"],
       );
 

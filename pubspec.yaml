@@ -17,7 +17,7 @@ dependencies:
   flutter_svg: ^1.1.4
   page_transition: ^2.0.9
   flutter_rating_bar: ^4.0.1
-  expandable_text: ^2.3.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

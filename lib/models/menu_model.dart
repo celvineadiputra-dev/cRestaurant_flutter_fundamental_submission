@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'drink_model.dart';
+import 'item_menu_model.dart';
 import 'food_model.dart';
 
 class Menus {
@@ -9,16 +9,16 @@ class Menus {
     required this.drinks,
   });
 
-  final List<Food> foods;
-  final List<Drink> drinks;
+  final List<ItemMenuModel> foods;
+  final List<ItemMenuModel> drinks;
 
   factory Menus.fromJson(String str) => Menus.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory Menus.fromMap(Map<String, dynamic> json) => Menus(
-        foods: List<Food>.from(json["foods"].map((x) => Food.fromMap(x))),
-        drinks: List<Drink>.from(json["drinks"].map((x) => Drink.fromMap(x))),
+        foods: List<ItemMenuModel>.from(json["foods"].map((x) => ItemMenuModel.fromMap(x))),
+        drinks: List<ItemMenuModel>.from(json["drinks"].map((x) => ItemMenuModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {

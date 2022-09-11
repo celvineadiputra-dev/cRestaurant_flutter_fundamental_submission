@@ -38,7 +38,10 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              HottestDiscountSection()
+              HottestDiscountSection(),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
@@ -188,10 +191,14 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                 child: PageView.builder(
                   controller: controller,
                   itemBuilder: (context, index) {
-                    Restaurant data = suggestRestaurant![index];
+                    Restaurant data = suggestRestaurant[index];
                     return InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(data : data)));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailScreen(data: data)));
                       },
                       child: CardSuggestWidget(
                         image: data.pictureId,
@@ -356,11 +363,21 @@ class _PopularRestaurantState extends State<PopularRestaurant> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 Restaurant data = snapshot.data![index];
-                return CardPopularWidget(
-                  image: data.pictureId,
-                  name: data.name,
-                  city: data.city,
-                  rating: data.rating,
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailScreen(data: data),
+                      ),
+                    );
+                  },
+                  child: CardPopularWidget(
+                    image: data.pictureId,
+                    name: data.name,
+                    city: data.city,
+                    rating: data.rating,
+                  ),
                 );
               },
               separatorBuilder: (BuildContext context, _) {
@@ -475,11 +492,21 @@ class _HottestDiscountState extends State<HottestDiscount> {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               Restaurant data = snapshot.data![index];
-              return CardRestoWidget(
-                image: data.pictureId,
-                name: data.name,
-                city: data.city,
-                rating: data.rating,
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(data: data),
+                    ),
+                  );
+                },
+                child: CardRestoWidget(
+                  image: data.pictureId,
+                  name: data.name,
+                  city: data.city,
+                  rating: data.rating,
+                ),
               );
             },
             separatorBuilder: (BuildContext context, _) {
