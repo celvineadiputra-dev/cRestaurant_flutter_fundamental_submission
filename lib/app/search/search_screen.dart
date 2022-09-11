@@ -73,18 +73,6 @@ class _SearchState extends State<Search> {
     "Sosis squash dan mint",
     "Coklat panas",
     "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
-    "Bring Your Phone Cafe",
   ];
 
   @override
