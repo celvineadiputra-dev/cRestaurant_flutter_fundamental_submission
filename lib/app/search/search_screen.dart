@@ -72,7 +72,19 @@ class _SearchState extends State<Search> {
     "Kafein",
     "Sosis squash dan mint",
     "Coklat panas",
-    "Bring Your Phone Cafe"
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
+    "Bring Your Phone Cafe",
   ];
 
   @override
@@ -186,43 +198,45 @@ class _SearchState extends State<Search> {
                         );
                       },
                       itemCount: listRestaurant!.length)
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Popular Search",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              ?.copyWith(
-                                  color: dark, fontWeight: FontWeight.bold),
-                        ),
-                        Wrap(
-                          spacing: 2,
-                          children: _popularSearch
-                              .map(
-                                (e) => ChoiceChip(
-                                  label: Text(
-                                    e,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(fontWeight: FontWeight.w400),
+                  : SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Popular Search",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(
+                                    color: dark, fontWeight: FontWeight.bold),
+                          ),
+                          Wrap(
+                            spacing: 2,
+                            children: _popularSearch
+                                .map(
+                                  (e) => ChoiceChip(
+                                    label: Text(
+                                      e,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .caption!
+                                          .copyWith(fontWeight: FontWeight.w400),
+                                    ),
+                                    selected: false,
+                                    onSelected: (_) {
+                                      setState(() {
+                                        _search.text = e;
+                                        listRestaurant = [];
+                                        searchRestaurant();
+                                      });
+                                    },
                                   ),
-                                  selected: false,
-                                  onSelected: (_) {
-                                    setState(() {
-                                      _search.text = e;
-                                      listRestaurant = [];
-                                      searchRestaurant();
-                                    });
-                                  },
-                                ),
-                              )
-                              .toList(),
-                        )
-                      ],
-                    ),
+                                )
+                                .toList(),
+                          )
+                        ],
+                      ),
+                  ),
         )
       ],
     );
