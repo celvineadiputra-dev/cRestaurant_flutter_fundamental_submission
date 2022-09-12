@@ -1,7 +1,7 @@
 # Belajar Fundamental Aplikasi Flutter
 ## CRestaurant Submission 1 
 
-<img src="asset_git/review_dicoding.png" width="750px"/>
+<img src="asset_git/Review_dicoding.png" width="750px"/>
 
 # Screenshot App
 <div>
