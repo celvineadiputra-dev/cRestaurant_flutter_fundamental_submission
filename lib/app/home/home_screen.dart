@@ -4,11 +4,13 @@ import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
+import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../services/restaurant_service.dart';
 
@@ -28,7 +30,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: const [
+            children: [
               SuggestRestaurant(),
               MenuItem(),
               SizedBox(

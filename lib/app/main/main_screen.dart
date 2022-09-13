@@ -1,5 +1,6 @@
 import 'package:crestaurant2/app/commingsoon/coming_soon_screen.dart';
 import 'package:crestaurant2/app/home/home_screen.dart';
+import 'package:crestaurant2/app/profile/profile_screen.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(),
     const ComingSoonScreen(),
     const ComingSoonScreen(),
-    const ComingSoonScreen(),
+    const ProfileScreen(),
   ];
 
   void _onItemTap(int index) {

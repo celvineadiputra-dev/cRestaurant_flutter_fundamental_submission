@@ -3,10 +3,12 @@ import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
 import 'package:crestaurant2/app/search/search_screen.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
+import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/themes/button_theme.dart';
 import 'package:crestaurant2/themes/text_theme.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,26 +19,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "CRestaurant",
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'GoogleSans',
-        textTheme: textTheme,
-        primaryColor: primary,
-        scaffoldBackgroundColor: Colors.white,
-        elevatedButtonTheme: elevatedButtonTheme,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "CRestaurant",
+        theme: ThemeData(
+            useMaterial3: true,
+            fontFamily: 'GoogleSans',
+            textTheme: textTheme,
+            primaryColor: primary,
+            scaffoldBackgroundColor: Colors.white,
+            elevatedButtonTheme: elevatedButtonTheme,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent),
+        routes: {
+          '/': (context) => const OnBoardingScreen(),
+          '/signin': (context) => const SignInScreen(),
+          '/signup': (context) => const SignUpScreen(),
+          '/main': (context) => const MainScreen(),
+          '/search': (context) => const SearchScreen()
+        },
       ),
-      routes: {
-        '/': (context) => const OnBoardingScreen(),
-        '/signin': (context) => const SignInScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/main': (context) => const MainScreen(),
-        '/search': (context) => const SearchScreen()
-      },
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:crestaurant2/models/auth_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthService {
-  Future<bool> login(BuildContext context, String email,
+  Future<AuthModel> login(BuildContext context, String email,
       String password) async {
     try {
       final String response = await DefaultAssetBundle.of(context)
@@ -15,7 +15,8 @@ class AuthService {
 
         AuthModel authModel = AuthModel.fromJson(data);
 
-        return authModel.email == email && authModel.password == password;
+        return authModel;
+        // return authModel.email == email && authModel.password == password;
       });
     } catch (e) {
       throw Exception(e);

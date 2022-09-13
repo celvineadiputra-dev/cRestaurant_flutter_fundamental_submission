@@ -5,6 +5,7 @@ import 'package:crestaurant2/app/widgets/button_widget.dart';
 import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
 import 'package:crestaurant2/app/widgets/password_form_field_widget.dart';
 import 'package:crestaurant2/app/widgets/text_form_field_widget.dart';
+import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/services/auth_service.dart';
 import 'package:crestaurant2/utils/connection_check.dart';
 import 'package:crestaurant2/utils/input_validation_util.dart';
@@ -13,6 +14,7 @@ import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -181,6 +183,8 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     return Form(
       key: _formKey,
       child: Column(
@@ -249,7 +253,7 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
                       isLoading = true;
                     });
                     if (!mounted) return;
-                    AuthService()
+                    authProvider
                         .login(context, emailController.text,
                             passwordController.text)
                         .then((value) {
