@@ -1,4 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
+import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
+import 'package:crestaurant2/utils/connection_check.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
@@ -121,14 +124,56 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
   final nameController = TextEditingController(text: "");
   final emailController = TextEditingController(text: "");
   final passwordController = TextEditingController(text: "");
+  late bool notConnected = false;
 
   late bool isLoading = false;
+
+  final Map _s = {ConnectivityResult.none: false};
+  final ConnectionCheck _connection = ConnectionCheck.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _connection.initialise();
+    _connection.connectionStream.listen((_s) {
+      _s = _s;
+
+      if (_s.keys.toList()[0] == ConnectivityResult.none) {}
+
+      if (_s.keys.toList()[0] == ConnectivityResult.mobile ||
+          _s.keys.toList()[0] == ConnectivityResult.wifi) {
+        if (_s.values.toList()[0] && notConnected) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.transparent,
+              content: CustomSnackBarContentWidget(
+                type: "success",
+                label: "Connected to Internet",
+              ),
+            ),
+          );
+        }
+      } else {
+        notConnected = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.transparent,
+            content: CustomSnackBarContentWidget(
+              type: "error",
+              label: "Not Connected to Internet",
+            ),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   void dispose() {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    _connection.disposeStream();
     super.dispose();
   }
 
@@ -181,9 +226,25 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
             height: 10,
           ),
           ButtonWidget(
-            onPress: () {
+            onPress: () async {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushReplacementNamed(context, '/main');
+                var connect = await Connectivity().checkConnectivity();
+                if (connect == ConnectivityResult.mobile ||
+                    connect == ConnectivityResult.wifi) {
+                  Navigator.pushReplacementNamed(context, '/main');
+                } else {
+                  notConnected = true;
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      backgroundColor: Colors.transparent,
+                      content: CustomSnackBarContentWidget(
+                        type: "error",
+                        label: "Not Connected to Internet",
+                      ),
+                    ),
+                  );
+                }
               }
             },
             label: "Sign Up",

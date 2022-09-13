@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/app/widgets/button_widget.dart';
@@ -5,6 +6,7 @@ import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
 import 'package:crestaurant2/app/widgets/password_form_field_widget.dart';
 import 'package:crestaurant2/app/widgets/text_form_field_widget.dart';
 import 'package:crestaurant2/services/auth_service.dart';
+import 'package:crestaurant2/utils/connection_check.dart';
 import 'package:crestaurant2/utils/input_validation_util.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
@@ -125,13 +127,55 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController(text: "");
   final passwordController = TextEditingController(text: "");
+  late bool notConnected = false;
 
   late bool isLoading = false;
+
+  final Map _s = {ConnectivityResult.none: false};
+  final ConnectionCheck _connection = ConnectionCheck.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _connection.initialise();
+    _connection.connectionStream.listen((_s) {
+      _s = _s;
+
+      if (_s.keys.toList()[0] == ConnectivityResult.none) {}
+
+      if (_s.keys.toList()[0] == ConnectivityResult.mobile ||
+          _s.keys.toList()[0] == ConnectivityResult.wifi) {
+        if (_s.values.toList()[0] && notConnected) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              backgroundColor: Colors.transparent,
+              content: CustomSnackBarContentWidget(
+                type: "success",
+                label: "Connected to Internet",
+              ),
+            ),
+          );
+        }
+      } else {
+        notConnected = true;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.transparent,
+            content: CustomSnackBarContentWidget(
+              type: "error",
+              label: "Not Connected to Internet",
+            ),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    _connection.disposeStream();
     super.dispose();
   }
 
@@ -195,36 +239,53 @@ class _FormSignInState extends State<FormSignIn> with InputValidationUtil {
             height: 40,
           ),
           ButtonWidget(
-            onPress: () {
+            onPress: () async {
               if (_formKey.currentState!.validate()) {
                 try {
-                  setState(() {
-                    isLoading = true;
-                  });
-                  AuthService()
-                      .login(context, emailController.text,
-                          passwordController.text)
-                      .then((value) {
-                    if (value) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                      Navigator.pushReplacementNamed(context, '/main');
-                    } else {
-                      setState(() {
-                        isLoading = false;
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          backgroundColor: Colors.transparent,
-                          content: CustomSnackBarContentWidget(
-                            type: "error",
-                            label: "Email or password doesn't match",
+                  var connect = await (Connectivity().checkConnectivity());
+                  if (connect == ConnectivityResult.mobile ||
+                      connect == ConnectivityResult.wifi) {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    if (!mounted) return;
+                    AuthService()
+                        .login(context, emailController.text,
+                            passwordController.text)
+                        .then((value) {
+                      if (value) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        Navigator.pushReplacementNamed(context, '/main');
+                      } else {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            backgroundColor: Colors.transparent,
+                            content: CustomSnackBarContentWidget(
+                              type: "error",
+                              label: "Email or password doesn't match",
+                            ),
                           ),
+                        );
+                      }
+                    });
+                  } else {
+                    notConnected = true;
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: Colors.transparent,
+                        content: CustomSnackBarContentWidget(
+                          type: "error",
+                          label: "Not Connected to Internet",
                         ),
-                      );
-                    }
-                  });
+                      ),
+                    );
+                  }
                 } catch (e) {
                   setState(() {
                     isLoading = false;
