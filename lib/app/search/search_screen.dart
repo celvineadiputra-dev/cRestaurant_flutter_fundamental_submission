@@ -87,14 +87,14 @@ class _SearchState extends State<Search> {
       _isShowClear = true;
       listRestaurant = [];
     });
-    await RestaurantService()
-        .findRestaurant(context: context, value: _search.text)
-        .then((value) {
-      listRestaurant = value;
-      setState(() {
-        _isLoading = false;
-      });
-    });
+    // await RestaurantService()
+    //     .findRestaurant(context: context, value: _search.text)
+    //     .then((value) {
+    //   listRestaurant = value;
+    //   setState(() {
+    //     _isLoading = false;
+    //   });
+    // });
   }
 
   @override
@@ -165,12 +165,12 @@ class _SearchState extends State<Search> {
                         Restaurant data = listRestaurant![index];
                         return InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(data: data),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => DetailScreen(data: data),
+                            //   ),
+                            // );
                           },
                           child: CardRestoWidget(
                             image: data.pictureId,

@@ -4,6 +4,7 @@ import 'package:crestaurant2/app/search/search_screen.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
+import 'package:crestaurant2/provider/restaurant_provider.dart';
 import 'package:crestaurant2/themes/button_theme.dart';
 import 'package:crestaurant2/themes/text_theme.dart';
 import 'package:crestaurant2/values/Colors.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider<RestaurantProvider>(create: (context) => RestaurantProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent),
         routes: {
-          '/': (context) => const OnBoardingScreen(),
+          '/': (context) => const MainScreen(),
           '/signin': (context) => const SignInScreen(),
           '/signup': (context) => const SignUpScreen(),
           '/main': (context) => const MainScreen(),

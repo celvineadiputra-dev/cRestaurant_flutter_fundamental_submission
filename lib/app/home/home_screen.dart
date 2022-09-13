@@ -5,6 +5,7 @@ import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
+import 'package:crestaurant2/provider/restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [
+            children: const [
               SuggestRestaurant(),
               MenuItem(),
               SizedBox(
@@ -160,21 +161,11 @@ class SuggestRestaurant extends StatefulWidget {
 
 class _SuggestRestaurantState extends State<SuggestRestaurant> {
   PageController controller = PageController(viewportFraction: 0.90);
-  late List<Restaurant> suggestRestaurant = [];
   late int _itemSlideActive = 0;
-
-  Future<void> fetchData() async {
-    List<Restaurant> response =
-        await RestaurantService().randomRestaurant(context);
-    setState(() {
-      suggestRestaurant = response;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
     controller.addListener(() {
       setState(() {
         _itemSlideActive = controller.page!.floor();
@@ -184,8 +175,19 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
 
   @override
   Widget build(BuildContext context) {
-    return suggestRestaurant.isNotEmpty
-        ? Column(
+    return Consumer<RestaurantProvider>(
+        builder: (context, RestaurantProvider restaurantProvider, _) {
+      switch (restaurantProvider.state) {
+        case ResultState.loading:
+          return const Center(
+            child: Loading(),
+          );
+        case ResultState.noData:
+          return const Center(
+            child: Loading(),
+          );
+        case ResultState.hasData:
+          return Column(
             children: [
               Container(
                 height: 300,
@@ -193,14 +195,14 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                 child: PageView.builder(
                   controller: controller,
                   itemBuilder: (context, index) {
-                    Restaurant data = suggestRestaurant[index];
+                    Restaurant data = restaurantProvider.suggestRestaurant[index];
                     return InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailScreen(data: data)));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             DetailScreen(data: data)));
                       },
                       child: CardSuggestWidget(
                         image: data.pictureId,
@@ -210,15 +212,24 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                       ),
                     );
                   },
-                  itemCount: suggestRestaurant.length,
+                  itemCount: restaurantProvider.suggestRestaurant.length,
                 ),
               ),
               indicatorSlide(
-                  itemCount: suggestRestaurant.length,
+                  itemCount: restaurantProvider.suggestRestaurant.length,
                   itemActive: _itemSlideActive)
             ],
-          )
-        : const Loading();
+          );
+        case ResultState.error:
+          return const Center(
+            child: Loading(),
+          );
+        default:
+          return const Center(
+            child: Loading(),
+          );
+      }
+    });
   }
 
   Widget indicatorSlide({required int itemCount, required int itemActive}) {
@@ -340,61 +351,64 @@ class PopularRestaurantSection extends StatelessWidget {
   }
 }
 
-class PopularRestaurant extends StatefulWidget {
+class PopularRestaurant extends StatelessWidget {
   const PopularRestaurant({Key? key}) : super(key: key);
 
   @override
-  State<PopularRestaurant> createState() => _PopularRestaurantState();
-}
-
-class _PopularRestaurantState extends State<PopularRestaurant> {
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Restaurant>?>(
-      future: RestaurantService().getPopularRestaurant(context),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
-          return const Loading();
-        } else if (snapshot.hasError) {
-          return const Loading();
-        } else if (snapshot.hasData) {
-          return SizedBox(
-            height: 170,
-            width: double.infinity,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                Restaurant data = snapshot.data![index];
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailScreen(data: data),
-                      ),
-                    );
-                  },
-                  child: CardPopularWidget(
-                    image: data.pictureId,
-                    name: data.name,
-                    city: data.city,
-                    rating: data.rating,
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, _) {
-                return const SizedBox(
-                  width: 5,
-                );
-              },
-              itemCount: snapshot.data!.length,
-            ),
-          );
-        } else {
-          return const Loading();
-        }
-      },
-    );
+    return Consumer<RestaurantProvider>(
+        builder: (context, RestaurantProvider restaurantProvider, _) {
+      if (restaurantProvider.state == ResultState.loading) {
+        return const Center(
+          child: Loading(),
+        );
+      } else if (restaurantProvider.state == ResultState.hasData) {
+        return SizedBox(
+          height: 170,
+          width: double.infinity,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              Restaurant data = restaurantProvider.popularRestaurant[index];
+              return InkWell(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DetailScreen(data: data),
+                  //   ),
+                  // );
+                },
+                child: CardPopularWidget(
+                  image: data.pictureId,
+                  name: data.name,
+                  city: data.city,
+                  rating: data.rating,
+                ),
+              );
+            },
+            separatorBuilder: (BuildContext context, _) {
+              return const SizedBox(
+                width: 5,
+              );
+            },
+            itemCount: restaurantProvider.popularRestaurant.length,
+          ),
+        );
+      } else if (restaurantProvider.state == ResultState.noData) {
+        return const Center(
+          child: Text("TIDAK ADA DATA"),
+        );
+      } else if (restaurantProvider.state == ResultState.error) {
+        return const Center(
+          child: Text("ERRPR"),
+        );
+      } else {
+        return const Center(
+          child: Text("JE:"),
+        );
+      }
+    });
   }
 }
 
@@ -470,38 +484,37 @@ class HottestDiscountSection extends StatelessWidget {
   }
 }
 
-class HottestDiscount extends StatefulWidget {
+class HottestDiscount extends StatelessWidget {
   const HottestDiscount({Key? key}) : super(key: key);
 
   @override
-  State<HottestDiscount> createState() => _HottestDiscountState();
-}
-
-class _HottestDiscountState extends State<HottestDiscount> {
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Restaurant>?>(
-      future: RestaurantService().getHottestRestaurant(context),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.none) {
-          return const Loading();
-        } else if (snapshot.hasError) {
-          return const Loading();
-        } else if (snapshot.hasData) {
+    return Consumer(
+        builder: (context, RestaurantProvider restaurantProvider, _) {
+      switch (restaurantProvider.state) {
+        case ResultState.loading:
+          return const Center(
+            child: Loading(),
+          );
+        case ResultState.noData:
+          return const Center(
+            child: Text("TIDAK ADA DATA"),
+          );
+        case ResultState.hasData:
           return ListView.separated(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
-              Restaurant data = snapshot.data![index];
+              Restaurant data = restaurantProvider.hottestRestaurant[index];
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailScreen(data: data),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => DetailScreen(data: data),
+                  //   ),
+                  // );
                 },
                 child: CardRestoWidget(
                   image: data.pictureId,
@@ -516,12 +529,17 @@ class _HottestDiscountState extends State<HottestDiscount> {
                 width: 5,
               );
             },
-            itemCount: snapshot.data!.length,
+            itemCount: restaurantProvider.hottestRestaurant.length,
           );
-        } else {
-          return const Loading();
-        }
-      },
-    );
+        case ResultState.error:
+          return const Center(
+            child: Text("ERRPR"),
+          );
+        default:
+          return const Center(
+            child: Loading(),
+          );
+      }
+    });
   }
 }
