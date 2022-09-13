@@ -1,12 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
+import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/utils/connection_check.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/input_validation_util.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -179,6 +181,8 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     return Form(
       key: _formKey,
       child: Column(
@@ -231,7 +235,16 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
                 var connect = await Connectivity().checkConnectivity();
                 if (connect == ConnectivityResult.mobile ||
                     connect == ConnectivityResult.wifi) {
-                  Navigator.pushReplacementNamed(context, '/main');
+                  if (!mounted) return;
+                  authProvider
+                      .register(context, nameController.text,
+                          emailController.text, passwordController.text)
+                      .then(
+                        (res) => {
+                          if (res)
+                            {Navigator.pushReplacementNamed(context, '/main')}
+                        },
+                      );
                 } else {
                   notConnected = true;
                   if (!mounted) return;
