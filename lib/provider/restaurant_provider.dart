@@ -41,7 +41,7 @@ class RestaurantProvider with ChangeNotifier {
             .getPopularRestaurant(listRestaurant: data);
 
         _hottestRestaurant = await RestaurantService()
-            .getPopularRestaurant(listRestaurant: data);
+            .getHottestRestaurant(listRestaurant: data);
 
         _restaurant = data;
         notifyListeners();
