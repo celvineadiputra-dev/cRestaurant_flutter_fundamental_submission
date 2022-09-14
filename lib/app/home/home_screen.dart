@@ -3,6 +3,7 @@ import 'package:crestaurant2/app/widgets/card_popular_widget.dart';
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
+import 'package:crestaurant2/app/widgets/suggest_card_loading.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/provider/restaurant_provider.dart';
@@ -180,11 +181,11 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
       switch (restaurantProvider.state) {
         case ResultState.loading:
           return const Center(
-            child: Loading(),
+            child: SuggestCardLoading(),
           );
         case ResultState.noData:
           return const Center(
-            child: Loading(),
+            child: Text("TIDAK ADA DATA"),
           );
         case ResultState.hasData:
           return Column(
@@ -224,11 +225,11 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
           );
         case ResultState.error:
           return const Center(
-            child: Loading(),
+            child: SuggestCardLoading(),
           );
         default:
           return const Center(
-            child: Loading(),
+            child: SuggestCardLoading(),
           );
       }
     });
