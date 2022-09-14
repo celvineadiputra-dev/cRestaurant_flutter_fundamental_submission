@@ -5,13 +5,13 @@ import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:http/http.dart' as http;
 
 class RestaurantService {
-  final String _baseUrl = 'https://restaurant-api.dicoding.dev';
+  static const String baseUrl = "https://restaurant-api.dicoding.dev";
 
   Future<List<Restaurant>> fetchData() async {
     print("FETCH");
     try {
       List<Restaurant> listRestaurant = [];
-      final response = await http.get(Uri.parse("$_baseUrl/list"));
+      final response = await http.get(Uri.parse("$baseUrl/list"));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -27,7 +27,8 @@ class RestaurantService {
     }
   }
 
-  Future<List<Restaurant>> randomRestaurant({required List<Restaurant> listRestaurant}) async {
+  Future<List<Restaurant>> randomRestaurant(
+      {required List<Restaurant> listRestaurant}) async {
     try {
       // List<Restaurant> listRestaurant = await fetchData();
 
@@ -50,7 +51,8 @@ class RestaurantService {
     }
   }
 
-  Future<List<Restaurant>> getPopularRestaurant({required List<Restaurant> listRestaurant}) async {
+  Future<List<Restaurant>> getPopularRestaurant(
+      {required List<Restaurant> listRestaurant}) async {
     try {
       // List<Restaurant> listRestaurant = await fetchData();
 
@@ -72,7 +74,8 @@ class RestaurantService {
     }
   }
 
-  Future<List<Restaurant>> getHottestRestaurant({required List<Restaurant> listRestaurant}) async {
+  Future<List<Restaurant>> getHottestRestaurant(
+      {required List<Restaurant> listRestaurant}) async {
     try {
       // List<Restaurant> listRestaurant = await fetchData();
 

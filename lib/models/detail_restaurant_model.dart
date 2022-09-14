@@ -29,9 +29,6 @@ class DetailRestaurant {
   final double rating;
   final List<CustomerReview> customerReviews;
 
-  factory DetailRestaurant.fromJson(String str) =>
-      DetailRestaurant.fromMap(json.decode(str));
-
   String toJson() => json.encode(toMap());
 
   factory DetailRestaurant.fromMap(Map<String, dynamic> json) =>

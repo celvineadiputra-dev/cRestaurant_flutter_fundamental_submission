@@ -1,6 +1,6 @@
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/services/restaurant_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 enum ResultState { loading, noData, hasData, error }
 
@@ -19,6 +19,7 @@ class RestaurantProvider with ChangeNotifier {
 
   List<Restaurant> get hottestRestaurant => _hottestRestaurant;
 
+
   ResultState get state => _state;
 
   RestaurantProvider() {
@@ -33,8 +34,8 @@ class RestaurantProvider with ChangeNotifier {
       if (data.isNotEmpty) {
         _state = ResultState.hasData;
 
-        _suggestRestaurant = await RestaurantService()
-            .randomRestaurant(listRestaurant: data);
+        _suggestRestaurant =
+            await RestaurantService().randomRestaurant(listRestaurant: data);
 
         _popularRestaurant = await RestaurantService()
             .getPopularRestaurant(listRestaurant: data);

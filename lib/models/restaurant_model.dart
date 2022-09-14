@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'menu_model.dart';
 
 class Restaurant {
   Restaurant({

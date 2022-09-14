@@ -195,14 +195,16 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
                 child: PageView.builder(
                   controller: controller,
                   itemBuilder: (context, index) {
-                    Restaurant data = restaurantProvider.suggestRestaurant[index];
+                    Restaurant data =
+                        restaurantProvider.suggestRestaurant[index];
                     return InkWell(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             DetailScreen(data: data)));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailScreen(data: data),
+                          ),
+                        );
                       },
                       child: CardSuggestWidget(
                         image: data.pictureId,
@@ -372,12 +374,12 @@ class PopularRestaurant extends StatelessWidget {
               Restaurant data = restaurantProvider.popularRestaurant[index];
               return InkWell(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailScreen(data: data),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(data: data),
+                    ),
+                  );
                 },
                 child: CardPopularWidget(
                   image: data.pictureId,
@@ -509,12 +511,12 @@ class HottestDiscount extends StatelessWidget {
               Restaurant data = restaurantProvider.hottestRestaurant[index];
               return InkWell(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailScreen(data: data),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(data: data),
+                    ),
+                  );
                 },
                 child: CardRestoWidget(
                   image: data.pictureId,
