@@ -3,6 +3,7 @@ import 'package:crestaurant2/app/widgets/card_popular_widget.dart';
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
+import 'package:crestaurant2/app/widgets/popular_card_loading.dart';
 import 'package:crestaurant2/app/widgets/suggest_card_loading.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
@@ -183,6 +184,8 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
           return const Center(
             child: SuggestCardLoading(),
           );
+        case ResultState.connectionError:
+          return Text("Connection error");
         case ResultState.noData:
           return const Center(
             child: Text("TIDAK ADA DATA"),
@@ -225,7 +228,7 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
           );
         case ResultState.error:
           return const Center(
-            child: SuggestCardLoading(),
+            child: Text("ERRRO"),
           );
         default:
           return const Center(
@@ -361,55 +364,60 @@ class PopularRestaurant extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<RestaurantProvider>(
         builder: (context, RestaurantProvider restaurantProvider, _) {
-      if (restaurantProvider.state == ResultState.loading) {
-        return const Center(
-          child: Loading(),
-        );
-      } else if (restaurantProvider.state == ResultState.hasData) {
-        return SizedBox(
-          height: 170,
-          width: double.infinity,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (BuildContext context, int index) {
-              Restaurant data = restaurantProvider.popularRestaurant[index];
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailScreen(data: data),
-                    ),
-                  );
-                },
-                child: CardPopularWidget(
-                  image: data.pictureId,
-                  name: data.name,
-                  city: data.city,
-                  rating: data.rating,
-                ),
-              );
-            },
-            separatorBuilder: (BuildContext context, _) {
-              return const SizedBox(
-                width: 5,
-              );
-            },
-            itemCount: restaurantProvider.popularRestaurant.length,
-          ),
-        );
-      } else if (restaurantProvider.state == ResultState.noData) {
-        return const Center(
-          child: Text("TIDAK ADA DATA"),
-        );
-      } else if (restaurantProvider.state == ResultState.error) {
-        return const Center(
-          child: Text("ERRPR"),
-        );
-      } else {
-        return const Center(
-          child: Text("JE:"),
-        );
+      switch (restaurantProvider.state) {
+        case ResultState.loading:
+          return const Center(
+            child: PopularCardLoading(),
+          );
+        case ResultState.connectionError:
+          return const Center(
+            child: Text("Connection error"),
+          );
+        case ResultState.noData:
+          return const Center(
+            child: Text("Tidak Ada data"),
+          );
+        case ResultState.hasData:
+          return SizedBox(
+            height: 170,
+            width: double.infinity,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (BuildContext context, int index) {
+                Restaurant data = restaurantProvider.popularRestaurant[index];
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailScreen(data: data),
+                      ),
+                    );
+                  },
+                  child: CardPopularWidget(
+                    image: data.pictureId,
+                    name: data.name,
+                    city: data.city,
+                    rating: data.rating,
+                  ),
+                );
+              },
+              separatorBuilder: (BuildContext context, _) {
+                return const SizedBox(
+                  width: 5,
+                );
+              },
+              itemCount: restaurantProvider.popularRestaurant.length,
+            ),
+          );
+        case ResultState.error:
+          return const Center(
+            child: Text("Error"),
+          );
+        default:
+          return const Center(
+            child: PopularCardLoading(),
+          );
       }
     });
   }
@@ -492,12 +500,16 @@ class HottestDiscount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
+    return Consumer<RestaurantProvider>(
         builder: (context, RestaurantProvider restaurantProvider, _) {
       switch (restaurantProvider.state) {
         case ResultState.loading:
           return const Center(
             child: Loading(),
+          );
+        case ResultState.connectionError:
+          return const Center(
+            child: Text("Connection Error"),
           );
         case ResultState.noData:
           return const Center(

@@ -1,8 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/services/restaurant_service.dart';
 import 'package:flutter/foundation.dart';
 
-enum ResultState { loading, noData, hasData, error }
+enum ResultState { loading, noData, hasData, error, connectionError }
 
 class RestaurantProvider with ChangeNotifier {
   late ResultState _state;
@@ -29,6 +30,16 @@ class RestaurantProvider with ChangeNotifier {
   Future<dynamic> fetchRestaurant() async {
     try {
       _state = ResultState.loading;
+
+      var connect = await Connectivity().checkConnectivity();
+
+      if(connect != ConnectivityResult.mobile ||
+          connect != ConnectivityResult.wifi){
+        _state = ResultState.connectionError;
+        notifyListeners();
+        return;
+      }
+
       List<Restaurant> data = await RestaurantService().fetchData();
 
       if (data.isNotEmpty) {
