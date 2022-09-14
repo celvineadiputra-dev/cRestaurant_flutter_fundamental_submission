@@ -15,63 +15,66 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(),
-                SvgPicture.asset(
-                  food,
-                  height: 190,
-                  color: primary,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Find restaurant is what the world was waiting for taste",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      ?.copyWith(fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-                const Spacer(),
-                ButtonWidget(
-                  onPress: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const SignInScreen(),
-                          type: PageTransitionType.bottomToTopJoined,
-                          duration: const Duration(milliseconds: 1200),
-                          childCurrent: this),
-                    );
-                  },
-                  label: "Sign In",
-                  verticalPadding: 15,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ButtonWidget(
-                  onPress: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                          child: const SignUpScreen(),
-                          type: PageTransitionType.bottomToTopJoined,
-                          duration: const Duration(milliseconds: 1200),
-                          childCurrent: this),
-                    );
-                  },
-                  label: "Sign Up",
-                  bgColor: dark,
-                  verticalPadding: 15,
-                ),
-              ],
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top - 30,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  SvgPicture.asset(
+                    food,
+                    height: 190,
+                    color: primary,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Find restaurant is what the world was waiting for taste",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline5
+                        ?.copyWith(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Spacer(),
+                  ButtonWidget(
+                    onPress: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const SignInScreen(),
+                            type: PageTransitionType.bottomToTopJoined,
+                            duration: const Duration(milliseconds: 1200),
+                            childCurrent: this),
+                      );
+                    },
+                    label: "Sign In",
+                    verticalPadding: 15,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ButtonWidget(
+                    onPress: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                            child: const SignUpScreen(),
+                            type: PageTransitionType.bottomToTopJoined,
+                            duration: const Duration(milliseconds: 1200),
+                            childCurrent: this),
+                      );
+                    },
+                    label: "Sign Up",
+                    bgColor: dark,
+                    verticalPadding: 15,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

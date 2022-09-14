@@ -1,6 +1,6 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/services/restaurant_service.dart';
+import 'package:crestaurant2/utils/connection_check_manual_util.dart';
 import 'package:flutter/foundation.dart';
 
 enum ResultState { loading, noData, hasData, error, connectionError }
@@ -31,10 +31,7 @@ class RestaurantProvider with ChangeNotifier {
     try {
       _state = ResultState.loading;
 
-      var connect = await Connectivity().checkConnectivity();
-
-      if(connect != ConnectivityResult.mobile ||
-          connect != ConnectivityResult.wifi){
+      if(await ConnectionCheckManual().isOffline()){
         _state = ResultState.connectionError;
         notifyListeners();
         return;

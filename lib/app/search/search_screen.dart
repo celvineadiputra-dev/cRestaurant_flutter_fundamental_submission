@@ -1,10 +1,11 @@
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
-import 'package:crestaurant2/services/restaurant_service.dart';
+import 'package:crestaurant2/provider/search_restaurant_provider.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:crestaurant2/values/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/restaurant_model.dart';
 import '../detail/detail_screen.dart';
@@ -60,8 +61,6 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   late bool _isShowClear = false;
-  late bool _isLoading = false;
-  late List<Restaurant>? listRestaurant = [];
 
   final TextEditingController _search = TextEditingController(text: "");
 
@@ -76,29 +75,35 @@ class _SearchState extends State<Search> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    final searchProvider =
+        Provider.of<SearchRestaurantProvider>(context, listen: false);
+    searchProvider.setDefaultState();
+  }
+
+  @override
   void dispose() {
     _search.dispose();
     super.dispose();
   }
 
   void searchRestaurant() async {
-    setState(() {
-      _isLoading = true;
-      _isShowClear = true;
-      listRestaurant = [];
-    });
-    // await RestaurantService()
-    //     .findRestaurant(context: context, value: _search.text)
-    //     .then((value) {
-    //   listRestaurant = value;
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // });
+    final searchProvider =
+        Provider.of<SearchRestaurantProvider>(context, listen: false);
+    if (_search.text.isNotEmpty) {
+      setState(() {
+        _isShowClear = true;
+      });
+      await searchProvider.searchRestaurant(value: _search.text);
+    } else {
+      searchProvider.setDefaultState();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final searchProvider = Provider.of<SearchRestaurantProvider>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -109,7 +114,6 @@ class _SearchState extends State<Search> {
           maxLines: 1,
           onChanged: (value) {
             setState(() {
-              listRestaurant = [];
               _isShowClear = value.isNotEmpty;
               searchRestaurant();
             });
@@ -132,7 +136,7 @@ class _SearchState extends State<Search> {
               suffixIcon: _isShowClear
                   ? InkWell(
                       onTap: () {
-                        listRestaurant = [];
+                        searchProvider.setDefaultState();
                         _search.clear();
                         setState(() {
                           _isShowClear = false;
@@ -153,24 +157,31 @@ class _SearchState extends State<Search> {
           height: 10,
         ),
         Expanded(
-          child: _isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: primary,
-                  ),
-                )
-              : listRestaurant!.isNotEmpty
-                  ? ListView.separated(
+          child: Consumer<SearchRestaurantProvider>(
+            builder: (context, SearchRestaurantProvider data, _) {
+              switch (data.state) {
+                case ResultState.loading:
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: primary,
+                    ),
+                  );
+                case ResultState.connectionError:
+                  return const Text("Connection Error");
+                case ResultState.noData:
+                  return const Text("No data");
+                case ResultState.hasData:
+                  return ListView.separated(
                       itemBuilder: (BuildContext context, int index) {
-                        Restaurant data = listRestaurant![index];
+                        Restaurant data = searchProvider.searchResult[index];
                         return InkWell(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => DetailScreen(data: data),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailScreen(data: data),
+                              ),
+                            );
                           },
                           child: CardRestoWidget(
                             image: data.pictureId,
@@ -185,46 +196,50 @@ class _SearchState extends State<Search> {
                           height: 10,
                         );
                       },
-                      itemCount: listRestaurant!.length)
-                  : SingleChildScrollView(
+                      itemCount: searchProvider.searchResult.length);
+                default:
+                  return SingleChildScrollView(
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Popular Search",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(
-                                    color: dark, fontWeight: FontWeight.bold),
-                          ),
-                          Wrap(
-                            spacing: 2,
-                            children: _popularSearch
-                                .map(
-                                  (e) => ChoiceChip(
-                                    label: Text(
-                                      e,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(fontWeight: FontWeight.w400),
-                                    ),
-                                    selected: false,
-                                    onSelected: (_) {
-                                      setState(() {
-                                        _search.text = e;
-                                        listRestaurant = [];
-                                        searchRestaurant();
-                                      });
-                                    },
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Popular Search",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                                  color: dark, fontWeight: FontWeight.bold),
+                        ),
+                        Wrap(
+                          spacing: 2,
+                          children: _popularSearch
+                              .map(
+                                (e) => ChoiceChip(
+                                  label: Text(
+                                    e,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption!
+                                        .copyWith(fontWeight: FontWeight.w400),
                                   ),
-                                )
-                                .toList(),
-                          )
-                        ],
-                      ),
-                  ),
+                                  selected: false,
+                                  onSelected: (_) {
+                                    setState(() {
+                                      _search.text = e;
+                                      searchProvider.setDefaultState();
+                                      searchRestaurant();
+                                    });
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        )
+                      ],
+                    ),
+                  );
+              }
+            },
+          ),
         )
       ],
     );

@@ -25,9 +25,10 @@ class CardRestoWidget extends StatelessWidget {
             width: 110,
             height: 86,
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(image), fit: BoxFit.fill),
-                borderRadius: BorderRadius.circular(12)),
+              image:
+                  DecorationImage(image: NetworkImage(image), fit: BoxFit.fill),
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
           const SizedBox(
             width: 10,

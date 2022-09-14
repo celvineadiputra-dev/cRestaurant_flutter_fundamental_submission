@@ -1,5 +1,4 @@
 import 'package:crestaurant2/models/item_menu_model.dart';
-import 'package:crestaurant2/models/menu_model.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
@@ -17,69 +16,67 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              leading: IconButton(
-                icon: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: SvgPicture.asset(back),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            leading: IconButton(
+              icon: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.7),
+                    borderRadius: BorderRadius.circular(10)),
+                child: SvgPicture.asset(back),
               ),
-              backgroundColor: primary,
-              expandedHeight: MediaQuery.of(context).size.height * 0.4,
-              flexibleSpace: Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Stack(
-                  children: [
-                    Align(
-                      child: Container(
-                        width: double.infinity,
-                        height: 350,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(data.pictureId),
-                                fit: BoxFit.cover)),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            backgroundColor: primary,
+            expandedHeight: MediaQuery.of(context).size.height * 0.4,
+            flexibleSpace: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: Stack(
+                children: [
+                  Align(
+                    child: Container(
+                      width: double.infinity,
+                      height: 350,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(data.pictureId),
+                              fit: BoxFit.cover)),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 20,
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 20,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                )),
+                          )
+                        ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 20,
-                        color: Colors.transparent,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 20,
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                  )),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [InfoRestaurant(data: data), DetailRestaurant(data: data)],
-              ),
-            )
-          ],
-        ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [InfoRestaurant(data: data), DetailRestaurant(data: data)],
+            ),
+          )
+        ],
       ),
     );
   }

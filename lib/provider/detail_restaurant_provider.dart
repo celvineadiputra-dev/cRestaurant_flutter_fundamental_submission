@@ -1,8 +1,9 @@
+import 'package:crestaurant2/utils/connection_check_manual_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:crestaurant2/models/detail_restaurant_model.dart';
 import 'package:crestaurant2/services/detail_restaurant_service.dart';
 
-enum ResultState { loading, noData, hasData, error }
+enum ResultState { loading, noData, hasData, error, connectionError }
 
 class DetailRestaurantProvider with ChangeNotifier {
   late ResultState _state;
@@ -15,6 +16,13 @@ class DetailRestaurantProvider with ChangeNotifier {
   Future<dynamic> fetchDetail({required String id}) async {
     try {
       _state = ResultState.loading;
+
+      if (await ConnectionCheckManual().isOffline()) {
+        _state = ResultState.connectionError;
+        notifyListeners();
+        return;
+      }
+
       DetailRestaurant? data =
           await DetailRestaurantService().fetchDetail(id: id);
 
@@ -31,7 +39,6 @@ class DetailRestaurantProvider with ChangeNotifier {
         _state = ResultState.noData;
       }
     } catch (e) {
-      print(e);
       _state = ResultState.error;
       notifyListeners();
       return "Something is bad";

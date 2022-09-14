@@ -2,11 +2,11 @@ import 'package:crestaurant2/app/detail/detail_screen.dart';
 import 'package:crestaurant2/app/widgets/card_popular_widget.dart';
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
+import 'package:crestaurant2/app/widgets/hottest_card_loading.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/app/widgets/popular_card_loading.dart';
 import 'package:crestaurant2/app/widgets/suggest_card_loading.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
-import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/provider/restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
@@ -14,8 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import '../../services/restaurant_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -185,7 +183,7 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
             child: SuggestCardLoading(),
           );
         case ResultState.connectionError:
-          return Text("Connection error");
+          return const Text("Connection error");
         case ResultState.noData:
           return const Center(
             child: Text("TIDAK ADA DATA"),
@@ -366,9 +364,7 @@ class PopularRestaurant extends StatelessWidget {
         builder: (context, RestaurantProvider restaurantProvider, _) {
       switch (restaurantProvider.state) {
         case ResultState.loading:
-          return const Center(
-            child: PopularCardLoading(),
-          );
+          return const PopularCardLoading();
         case ResultState.connectionError:
           return const Center(
             child: Text("Connection error"),
@@ -504,9 +500,7 @@ class HottestDiscount extends StatelessWidget {
         builder: (context, RestaurantProvider restaurantProvider, _) {
       switch (restaurantProvider.state) {
         case ResultState.loading:
-          return const Center(
-            child: Loading(),
-          );
+          return const HottestCardLoading();
         case ResultState.connectionError:
           return const Center(
             child: Text("Connection Error"),
@@ -551,9 +545,7 @@ class HottestDiscount extends StatelessWidget {
             child: Text("ERRPR"),
           );
         default:
-          return const Center(
-            child: Loading(),
-          );
+          return const HottestCardLoading();
       }
     });
   }

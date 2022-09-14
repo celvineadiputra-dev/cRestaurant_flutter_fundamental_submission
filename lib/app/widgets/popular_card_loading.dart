@@ -7,22 +7,37 @@ class PopularCardLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-        child: Card(
-          color: Colors.white,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: 100,
-                width: 120,
-                color: Colors.red,
+    return SizedBox(
+      height: 170,
+      width: double.infinity,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+          itemBuilder: (BuildContext context, int index) {
+            return Shimmer.fromColors(
+              baseColor: grey2,
+              highlightColor: Colors.grey[400]!,
+              child: Card(
+                color: Colors.white,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 120,
+                      color: Colors.red,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-        baseColor: grey2,
-        highlightColor: Colors.grey[400]!);
+            );
+          },
+          separatorBuilder: (BuildContext context, _) {
+            return const SizedBox(
+              width: 5,
+            );
+          },
+          itemCount: 3),
+    );
   }
 }

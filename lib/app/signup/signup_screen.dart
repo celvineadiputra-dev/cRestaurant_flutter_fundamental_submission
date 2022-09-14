@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/widgets/custom_snack_bar_widget.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
-import 'package:crestaurant2/utils/connection_check.dart';
+import 'package:crestaurant2/utils/connection_check_util.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
       appBar: appBarWidget(context),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
