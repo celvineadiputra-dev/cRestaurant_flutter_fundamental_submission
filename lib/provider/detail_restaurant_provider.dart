@@ -47,9 +47,6 @@ class DetailRestaurantProvider with ChangeNotifier {
   }
 
   void setNewReview({required List<CustomerReview>? newReview}) {
-    print('-------------------3');
-    print(newReview);
-    print('-------------------3');
     _detailRestaurant!.customerReviews = newReview!;
     notifyListeners();
   }

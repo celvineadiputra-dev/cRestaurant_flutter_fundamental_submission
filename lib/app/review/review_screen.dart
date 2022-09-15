@@ -3,6 +3,7 @@ import 'package:crestaurant2/models/customer_review_model.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/services/review_service.dart';
+import 'package:crestaurant2/utils/connection_check_manual_util.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -50,7 +51,7 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const CircleAvatar(),
+                    const CircleAvatar(backgroundColor: grey1,),
                     const SizedBox(
                       width: 10,
                     ),
@@ -116,12 +117,39 @@ class _FormReviewState extends State<FormReview> {
   Widget build(BuildContext context) {
     final DetailRestaurantProvider detailRestaurantProvider =
         Provider.of<DetailRestaurantProvider>(context, listen: false);
+
+    void handlePostReview() async {
+      if (await ConnectionCheckManual().isOffline()) {
+        Fluttertoast.showToast(msg: "Connection Error, check your connection");
+        return;
+      }
+
+      setState(() {
+        _isLoading = true;
+      });
+      List<CustomerReview>? response = await ReviewService().postReview(
+          id: widget.id,
+          name: widget.userName,
+          review: reviewController.text);
+
+      if (response != null) {
+        detailRestaurantProvider.setNewReview(newReview: response);
+        Fluttertoast.showToast(msg: "Success");
+      } else {
+        Fluttertoast.showToast(msg: "Failed");
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
     return Column(
       children: [
         TextFormField(
           cursorColor: primary,
           textAlignVertical: TextAlignVertical.center,
-          maxLength: 50,
+          maxLength: 150,
           maxLines: 4,
           controller: reviewController,
           decoration: InputDecoration(
@@ -143,25 +171,8 @@ class _FormReviewState extends State<FormReview> {
           height: 20,
         ),
         ButtonWidget(
-            onPress: () async {
-              setState(() {
-                _isLoading = true;
-              });
-              List<CustomerReview>? response = await ReviewService().postReview(
-                  id: widget.id,
-                  name: widget.userName,
-                  review: reviewController.text);
-
-              if (response != null) {
-                detailRestaurantProvider.setNewReview(newReview: response);
-                Fluttertoast.showToast(msg: "Success");
-              } else {
-                Fluttertoast.showToast(msg: "Failed");
-              }
-
-              setState(() {
-                _isLoading = false;
-              });
+            onPress: () {
+              handlePostReview();
             },
             label: "Posting",
             isLoading: _isLoading),

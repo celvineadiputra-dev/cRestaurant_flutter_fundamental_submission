@@ -1,11 +1,13 @@
 import 'package:crestaurant2/app/commingsoon/coming_soon_screen.dart';
 import 'package:crestaurant2/app/home/home_screen.dart';
 import 'package:crestaurant2/app/profile/profile_screen.dart';
+import 'package:crestaurant2/provider/navigation_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -15,7 +17,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 0;
+  late NavigationProvider navigationProvider;
+  // int _selectedIndex = 0;
 
   List<Widget> widgetPages = [
     const HomeScreen(),
@@ -26,15 +29,16 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onItemTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      navigationProvider.setIndex(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    navigationProvider = Provider.of<NavigationProvider>(context);
     return Scaffold(
       body: SafeArea(
-        child: widgetPages[_selectedIndex],
+        child: widgetPages[navigationProvider.selectedIndex],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -68,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
                       MenuTab(
                         icon: home,
                         index: 0,
-                        indexActive: _selectedIndex,
+                        indexActive: navigationProvider.selectedIndex,
                         onPress: () {
                           _onItemTap(0);
                         },
@@ -79,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
                       MenuTab(
                         icon: love,
                         index: 1,
-                        indexActive: _selectedIndex,
+                        indexActive: navigationProvider.selectedIndex,
                         onPress: () {
                           _onItemTap(1);
                         },
@@ -92,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                       MenuTab(
                         icon: home,
                         index: 2,
-                        indexActive: _selectedIndex,
+                        indexActive: navigationProvider.selectedIndex,
                         onPress: () {
                           _onItemTap(2);
                         },
@@ -103,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
                       MenuTab(
                         icon: user,
                         index: 3,
-                        indexActive: _selectedIndex,
+                        indexActive: navigationProvider.selectedIndex,
                         onPress: () {
                           _onItemTap(3);
                         },

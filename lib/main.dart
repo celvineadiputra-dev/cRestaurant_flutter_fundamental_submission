@@ -1,11 +1,13 @@
 import 'package:crestaurant2/app/main/main_screen.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
+import 'package:crestaurant2/app/profile/profile_screen.dart';
 import 'package:crestaurant2/app/review/review_screen.dart';
 import 'package:crestaurant2/app/search/search_screen.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
+import 'package:crestaurant2/provider/navigation_provider.dart';
 import 'package:crestaurant2/provider/restaurant_provider.dart';
 import 'package:crestaurant2/provider/search_restaurant_provider.dart';
 import 'package:crestaurant2/themes/button_theme.dart';
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => NavigationProvider()),
         ChangeNotifierProvider<RestaurantProvider>(create: (context) => RestaurantProvider()),
         ChangeNotifierProvider(create: (context) => DetailRestaurantProvider()),
         ChangeNotifierProvider(create: (context) => SearchRestaurantProvider()),
@@ -48,7 +51,8 @@ class MyApp extends StatelessWidget {
           '/signup': (context) => const SignUpScreen(),
           '/main': (context) => const MainScreen(),
           '/search': (context) => const SearchScreen(),
-          '/review': (context) => const ReviewScreen()
+          '/review': (context) => const ReviewScreen(),
+          '/profile': (context) => const ProfileScreen()
         },
       ),
     );

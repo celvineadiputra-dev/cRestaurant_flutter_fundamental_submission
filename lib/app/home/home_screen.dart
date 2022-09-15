@@ -7,6 +7,7 @@ import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/app/widgets/popular_card_loading.dart';
 import 'package:crestaurant2/app/widgets/suggest_card_loading.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
+import 'package:crestaurant2/provider/navigation_provider.dart';
 import 'package:crestaurant2/provider/restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: primary,
@@ -27,7 +29,7 @@ class HomeScreen extends StatelessWidget {
       ),
     );
     return Scaffold(
-      appBar: appBar(context),
+      appBar: appBar(context, navigationProvider),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -52,7 +54,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget appBar(BuildContext context) {
+  PreferredSizeWidget appBar(BuildContext context, NavigationProvider navigationProvider) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: primary,
@@ -97,16 +99,21 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       actions: [
-        Container(
-          margin: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: SvgPicture.asset(
-                profile,
-                color: primary,
+        InkWell(
+          onTap: (){
+            navigationProvider.setIndex(3);
+          },
+          child: Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                decoration: const BoxDecoration(color: Colors.white),
+                child: SvgPicture.asset(
+                  profile,
+                  color: primary,
+                ),
               ),
             ),
           ),

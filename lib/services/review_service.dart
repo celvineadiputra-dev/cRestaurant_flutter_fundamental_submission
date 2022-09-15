@@ -10,6 +10,8 @@ class ReviewService {
       required String name,
       required String review}) async {
     try {
+      List<CustomerReview> customerReview = [];
+
       final headers = {'Content-Type': 'application/json'};
       Map<String, dynamic> data = {'id': id, 'name': name, 'review': review};
 
@@ -18,7 +20,6 @@ class ReviewService {
           headers: headers,
           body: json.encode(data));
 
-      List<CustomerReview> customerReview = [];
       if (response.statusCode == 201) {
         final data = json.decode(response.body);
 
