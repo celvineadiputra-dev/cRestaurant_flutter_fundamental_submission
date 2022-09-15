@@ -1,3 +1,4 @@
+import 'package:crestaurant2/app/widgets/error_widget.dart';
 import 'package:crestaurant2/models/category_model.dart';
 import 'package:crestaurant2/models/customer_review_model.dart';
 import 'package:crestaurant2/models/item_menu_model.dart';
@@ -214,17 +215,17 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
     final dataProvider = Provider.of<DetailRestaurantProvider>(context);
     switch (dataProvider.state) {
       case ResultState.loading:
-        return const Center(
-          child: Text("LOADING"),
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            CircularProgressIndicator(color: primary,)
+          ],
         );
       case ResultState.connectionError:
-        return const Center(
-          child: Text("Connection error"),
-        );
+        return noConnection();
       case ResultState.noData:
-        return const Center(
-          child: Text("TIDAK ADA DATA"),
-        );
+        return notFound();
       case ResultState.hasData:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,12 +296,14 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
           ],
         );
       case ResultState.error:
-        return const Center(
-          child: Text("ERROR"),
-        );
+        return errorCode();
       default:
-        return const Center(
-          child: Text("LOADING"),
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            CircularProgressIndicator(color: primary,)
+          ],
         );
     }
   }

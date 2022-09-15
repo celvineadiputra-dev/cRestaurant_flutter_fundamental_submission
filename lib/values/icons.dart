@@ -14,4 +14,12 @@ const utensils = 'assets/icons/utensils.svg';
 const star = 'assets/icons/star.svg';
 const user = 'assets/icons/user.svg';
 const love = 'assets/icons/love.svg';
+const globe = 'assets/icons/globe.svg';
+const promotion = 'assets/icons/promotion.svg';
+const like = 'assets/icons/like.svg';
+const help = 'assets/icons/help.svg';
+
 const focus = 'assets/images/interaction_design_amico.svg';
+const noConnectionImage = 'assets/images/no_connection.svg';
+const notFoundImage = 'assets/images/not_found.svg';
+const errorImage = 'assets/images/error.svg';

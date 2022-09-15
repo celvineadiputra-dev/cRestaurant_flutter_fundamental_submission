@@ -1,4 +1,5 @@
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
+import 'package:crestaurant2/app/widgets/error_widget.dart';
 import 'package:crestaurant2/provider/search_restaurant_provider.dart';
 import 'package:crestaurant2/values/Icons.dart';
 import 'package:crestaurant2/values/colors.dart';
@@ -167,9 +168,9 @@ class _SearchState extends State<Search> {
                     ),
                   );
                 case ResultState.connectionError:
-                  return const Text("Connection Error");
+                  return noConnection();
                 case ResultState.noData:
-                  return const Text("No data");
+                  return notFound();
                 case ResultState.hasData:
                   return ListView.separated(
                       itemBuilder: (BuildContext context, int index) {
@@ -197,6 +198,8 @@ class _SearchState extends State<Search> {
                         );
                       },
                       itemCount: searchProvider.searchResult.length);
+                case ResultState.error:
+                  return errorCode();
                 default:
                   return SingleChildScrollView(
                     child: Column(

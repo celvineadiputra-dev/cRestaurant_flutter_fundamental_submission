@@ -2,6 +2,7 @@ import 'package:crestaurant2/app/detail/detail_screen.dart';
 import 'package:crestaurant2/app/widgets/card_popular_widget.dart';
 import 'package:crestaurant2/app/widgets/card_resto_widget.dart';
 import 'package:crestaurant2/app/widgets/card_suggest_widget.dart';
+import 'package:crestaurant2/app/widgets/error_widget.dart';
 import 'package:crestaurant2/app/widgets/hottest_card_loading.dart';
 import 'package:crestaurant2/app/widgets/menu_widget.dart';
 import 'package:crestaurant2/app/widgets/popular_card_loading.dart';
@@ -190,11 +191,9 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
             child: SuggestCardLoading(),
           );
         case ResultState.connectionError:
-          return const Text("Connection error");
+          return noConnection();
         case ResultState.noData:
-          return const Center(
-            child: Text("TIDAK ADA DATA"),
-          );
+          return notFound();
         case ResultState.hasData:
           return Column(
             children: [
@@ -232,9 +231,7 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
             ],
           );
         case ResultState.error:
-          return const Center(
-            child: Text("ERRRO"),
-          );
+          return errorCode();
         default:
           return const Center(
             child: SuggestCardLoading(),
@@ -258,33 +255,6 @@ class _SuggestRestaurantState extends State<SuggestRestaurant> {
           ),
           margin: const EdgeInsets.symmetric(horizontal: 5),
         ),
-      ),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  const Loading({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          const CircularProgressIndicator(
-            color: primary,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Finding Resto Just For You",
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(color: dark),
-          )
-        ],
       ),
     );
   }
@@ -373,13 +343,9 @@ class PopularRestaurant extends StatelessWidget {
         case ResultState.loading:
           return const PopularCardLoading();
         case ResultState.connectionError:
-          return const Center(
-            child: Text("Connection error"),
-          );
+          return noConnection();
         case ResultState.noData:
-          return const Center(
-            child: Text("Tidak Ada data"),
-          );
+          return notFound();
         case ResultState.hasData:
           return SizedBox(
             height: 170,
@@ -414,9 +380,7 @@ class PopularRestaurant extends StatelessWidget {
             ),
           );
         case ResultState.error:
-          return const Center(
-            child: Text("Error"),
-          );
+          return errorCode();
         default:
           return const Center(
             child: PopularCardLoading(),
@@ -509,13 +473,9 @@ class HottestDiscount extends StatelessWidget {
         case ResultState.loading:
           return const HottestCardLoading();
         case ResultState.connectionError:
-          return const Center(
-            child: Text("Connection Error"),
-          );
+          return noConnection();
         case ResultState.noData:
-          return const Center(
-            child: Text("TIDAK ADA DATA"),
-          );
+          return notFound();
         case ResultState.hasData:
           return ListView.separated(
             scrollDirection: Axis.vertical,
@@ -548,9 +508,7 @@ class HottestDiscount extends StatelessWidget {
             itemCount: restaurantProvider.hottestRestaurant.length,
           );
         case ResultState.error:
-          return const Center(
-            child: Text("ERRPR"),
-          );
+          return errorCode();
         default:
           return const HottestCardLoading();
       }
