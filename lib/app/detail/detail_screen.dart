@@ -1,8 +1,11 @@
+import 'package:crestaurant2/models/category_model.dart';
+import 'package:crestaurant2/models/customer_review_model.dart';
 import 'package:crestaurant2/models/item_menu_model.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -181,10 +184,12 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
   Widget tabOn(
       {required int index,
       required List<ItemMenuModel> foods,
-      required List<ItemMenuModel> drinks}) {
+      required List<ItemMenuModel> drinks,
+      required List<Category> category}) {
     listTab = [
       DescContent(
         desc: widget.data.description,
+        category: category,
       ),
       MenuContent(
         menu: foods,
@@ -281,7 +286,8 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
             tabOn(
                 index: _activeTab,
                 foods: dataProvider.detailRestaurant!.menus.foods,
-                drinks: dataProvider.detailRestaurant!.menus.drinks)
+                drinks: dataProvider.detailRestaurant!.menus.drinks,
+                category: dataProvider.detailRestaurant!.categories)
           ],
         );
       case ResultState.error:
@@ -298,14 +304,68 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
 
 class DescContent extends StatelessWidget {
   final String desc;
+  final List<Category> category;
 
-  const DescContent({Key? key, required this.desc}) : super(key: key);
+  const DescContent(
+      {Key? key,
+      required this.desc,
+      required this.category})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 10),
-      child: Text(desc),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          category.isNotEmpty
+              ? SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        return ChoiceChip(
+                          side: BorderSide.none,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .button!
+                              .copyWith(
+                                  fontSize: 12, fontWeight: FontWeight.w400),
+                          label: Text(category[index].name),
+                          selected: false,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, _) {
+                        return const SizedBox(
+                          width: 5,
+                        );
+                      },
+                      itemCount: category.length),
+                )
+              : const Text(""),
+          ExpandableText(
+            desc,
+            expandText: "Read More",
+            maxLines: 4,
+            animation: true,
+            collapseText: "Read Less",
+            style:
+                Theme.of(context).textTheme.subtitle2!.copyWith(color: grey1),
+            textAlign: TextAlign.justify,
+            linkColor: primary,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const GiveReview(),
+          const SizedBox(
+            height: 12,
+          ),
+          RatingReview()
+        ],
+      ),
     );
   }
 }
@@ -337,5 +397,205 @@ class MenuContent extends StatelessWidget {
               )
               .toList(),
         ));
+  }
+}
+
+class RatingReview extends StatelessWidget {
+
+  const RatingReview({Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Rating and Review",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
+              ),
+              const Icon(
+                Icons.arrow_forward_rounded,
+                size: 20,
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Text(
+            "Rating and review from awesome user",
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: dark, fontWeight: FontWeight.w300, fontSize: 10),
+          ),
+          Consumer<DetailRestaurantProvider>(
+            builder: (context, DetailRestaurantProvider data, _){
+              return ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    CustomerReview review = data.detailRestaurant!.customerReviews[index];
+                    return Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 15,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(review.name)
+                                ],
+                              ),
+                              const Icon(
+                                Icons.more_vert,
+                                color: grey1,
+                                size: 19,
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              RatingBar(
+                                initialRating: 4.5 - (index - 0.4),
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 12,
+                                ratingWidget: RatingWidget(
+                                    full: const Icon(
+                                      Icons.star,
+                                      color: orange,
+                                    ),
+                                    half: const Icon(
+                                      Icons.star_half,
+                                      color: orange,
+                                    ),
+                                    empty: const Icon(
+                                      Icons.star_border,
+                                      color: grey1,
+                                    )),
+                                onRatingUpdate: (double value) {},
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                review.date,
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 10),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            review.review,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, _) {
+                    return const SizedBox(
+                      height: 15,
+                    );
+                  },
+                  itemCount: data.detailRestaurant!.customerReviews.length);
+            },
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class GiveReview extends StatelessWidget {
+  const GiveReview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Give your review for this restaurant",
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(fontWeight: FontWeight.w500, fontSize: 13),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          RatingBar(
+            initialRating: 0,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemSize: 40,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 10),
+            ratingWidget: RatingWidget(
+                full: const Icon(
+                  Icons.star,
+                  color: orange,
+                ),
+                half: const Icon(
+                  Icons.star_half,
+                  color: orange,
+                ),
+                empty: const Icon(
+                  Icons.star_border,
+                  color: grey1,
+                )),
+            onRatingUpdate: (double value) {
+              Navigator.pushNamed(context, '/review');
+            },
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/review');
+                  },
+                  child: Text(
+                    "Write review",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: primary, fontSize: 12),
+                  ))
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

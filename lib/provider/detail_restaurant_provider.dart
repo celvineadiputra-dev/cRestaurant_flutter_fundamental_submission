@@ -1,3 +1,4 @@
+import 'package:crestaurant2/models/customer_review_model.dart';
 import 'package:crestaurant2/utils/connection_check_manual_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:crestaurant2/models/detail_restaurant_model.dart';
@@ -43,5 +44,13 @@ class DetailRestaurantProvider with ChangeNotifier {
       notifyListeners();
       return "Something is bad";
     }
+  }
+
+  void setNewReview({required List<CustomerReview>? newReview}) {
+    print('-------------------3');
+    print(newReview);
+    print('-------------------3');
+    _detailRestaurant!.customerReviews = newReview!;
+    notifyListeners();
   }
 }

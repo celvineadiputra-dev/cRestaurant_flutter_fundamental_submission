@@ -27,7 +27,7 @@ class DetailRestaurant {
   final List<Category> categories;
   final Menus menus;
   final double rating;
-  final List<CustomerReview> customerReviews;
+  late List<CustomerReview> customerReviews;
 
   String toJson() => json.encode(toMap());
 
@@ -60,4 +60,8 @@ class DetailRestaurant {
         "customerReviews":
             List<dynamic>.from(customerReviews.map((x) => x.toMap())),
       };
+
+  set customerReview(List<CustomerReview>? newReview) {
+    customerReviews = newReview!;
+  }
 }
