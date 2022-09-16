@@ -219,7 +219,9 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            CircularProgressIndicator(color: primary,)
+            CircularProgressIndicator(
+              color: primary,
+            )
           ],
         );
       case ResultState.connectionError:
@@ -302,7 +304,9 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            CircularProgressIndicator(color: primary,)
+            CircularProgressIndicator(
+              color: primary,
+            )
           ],
         );
     }
@@ -435,8 +439,10 @@ class RatingReview extends StatelessWidget {
         ),
         Text(
           "Rating and review from awesome user",
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: dark, fontWeight: FontWeight.w300, fontSize: 10),
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: dark, fontWeight: FontWeight.w300, fontSize: 10),
         ),
         Consumer<DetailRestaurantProvider>(
           builder: (context, DetailRestaurantProvider data, _) {
@@ -585,16 +591,17 @@ class GiveReview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/review');
-                  },
-                  child: Text(
-                    "Write review",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(color: primary, fontSize: 12),
-                  ))
+                onPressed: () {
+                  Navigator.pushNamed(context, '/review');
+                },
+                child: Text(
+                  "Write review",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: primary, fontSize: 12),
+                ),
+              )
             ],
           )
         ],

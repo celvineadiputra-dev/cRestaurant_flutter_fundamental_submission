@@ -4,8 +4,8 @@ class ConnectionCheckManual {
   Future<bool> isOffline() async {
     var connect = await Connectivity().checkConnectivity();
 
-    if(connect != ConnectivityResult.mobile &&
-        connect != ConnectivityResult.wifi){
+    if (connect != ConnectivityResult.mobile &&
+        connect != ConnectivityResult.wifi) {
       return true;
     }
 

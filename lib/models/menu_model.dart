@@ -16,8 +16,10 @@ class Menus {
   String toJson() => json.encode(toMap());
 
   factory Menus.fromMap(Map<String, dynamic> json) => Menus(
-        foods: List<ItemMenuModel>.from(json["foods"].map((x) => ItemMenuModel.fromMap(x))),
-        drinks: List<ItemMenuModel>.from(json["drinks"].map((x) => ItemMenuModel.fromMap(x))),
+        foods: List<ItemMenuModel>.from(
+            json["foods"].map((x) => ItemMenuModel.fromMap(x))),
+        drinks: List<ItemMenuModel>.from(
+            json["drinks"].map((x) => ItemMenuModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {

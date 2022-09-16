@@ -9,7 +9,7 @@ mixin InputValidationUtil {
     return regex.hasMatch(email);
   }
 
-  bool isNameValid(String name){
+  bool isNameValid(String name) {
     final nameRegExp = RegExp(r"^[A-Za-z][A-Za-z0-9_]{3,20}$");
     return nameRegExp.hasMatch(name);
   }

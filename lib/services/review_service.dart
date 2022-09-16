@@ -24,7 +24,6 @@ class ReviewService {
         final data = json.decode(response.body);
 
         data['customerReviews'].map((item) {
-          print(item);
           CustomerReview itemCustomerReview = CustomerReview.fromMap(item);
           customerReview.add(itemCustomerReview);
         }).toList();

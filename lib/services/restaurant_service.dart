@@ -88,8 +88,7 @@ class RestaurantService {
     }
   }
 
-  Future<List<Restaurant>> findRestaurant(
-      {required String value}) async {
+  Future<List<Restaurant>> findRestaurant({required String value}) async {
     try {
       List<Restaurant> listRestaurant = [];
 

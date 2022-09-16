@@ -18,7 +18,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late NavigationProvider navigationProvider;
-  // int _selectedIndex = 0;
 
   List<Widget> widgetPages = [
     const HomeScreen(),

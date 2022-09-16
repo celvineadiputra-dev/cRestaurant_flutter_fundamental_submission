@@ -20,7 +20,6 @@ class RestaurantProvider with ChangeNotifier {
 
   List<Restaurant> get hottestRestaurant => _hottestRestaurant;
 
-
   ResultState get state => _state;
 
   RestaurantProvider() {
@@ -31,7 +30,7 @@ class RestaurantProvider with ChangeNotifier {
     try {
       _state = ResultState.loading;
 
-      if(await ConnectionCheckManual().isOffline()){
+      if (await ConnectionCheckManual().isOffline()) {
         _state = ResultState.connectionError;
         notifyListeners();
         return;

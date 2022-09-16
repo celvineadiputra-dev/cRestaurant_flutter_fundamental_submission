@@ -26,7 +26,8 @@ class Restaurant {
         id: json["id"],
         name: json["name"],
         description: json["description"],
-        pictureId: 'https://restaurant-api.dicoding.dev/images/medium/${json["pictureId"]}',
+        pictureId:
+            'https://restaurant-api.dicoding.dev/images/medium/${json["pictureId"]}',
         city: json["city"],
         rating: json["rating"].toDouble(),
       );

@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => NavigationProvider()),
-        ChangeNotifierProvider<RestaurantProvider>(create: (context) => RestaurantProvider()),
+        ChangeNotifierProvider<RestaurantProvider>(
+            create: (context) => RestaurantProvider()),
         ChangeNotifierProvider(create: (context) => DetailRestaurantProvider()),
         ChangeNotifierProvider(create: (context) => SearchRestaurantProvider()),
       ],

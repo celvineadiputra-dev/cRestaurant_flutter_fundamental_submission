@@ -13,7 +13,8 @@ class DetailRestaurantService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
 
-        DetailRestaurant detailRestaurant = DetailRestaurant.fromMap(data['restaurant']);
+        DetailRestaurant detailRestaurant =
+            DetailRestaurant.fromMap(data['restaurant']);
 
         return detailRestaurant;
       }

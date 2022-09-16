@@ -15,8 +15,8 @@ class ConnectionCheck {
   Stream get connectionStream => _controller.stream;
 
   void initialise() async {
-    ConnectivityResult result = await _connectionCheckActivity
-        .checkConnectivity();
+    ConnectivityResult result =
+        await _connectionCheckActivity.checkConnectivity();
 
     _checkStatus(result);
 

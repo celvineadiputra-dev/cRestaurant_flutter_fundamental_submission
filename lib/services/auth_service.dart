@@ -4,8 +4,8 @@ import 'package:crestaurant2/models/auth_model.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthService {
-  Future<AuthModel> login(BuildContext context, String email,
-      String password) async {
+  Future<AuthModel> login(
+      BuildContext context, String email, String password) async {
     try {
       final String response = await DefaultAssetBundle.of(context)
           .loadString("assets/data/local_auth.json");

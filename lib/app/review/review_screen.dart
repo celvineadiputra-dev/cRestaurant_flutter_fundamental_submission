@@ -51,7 +51,9 @@ class ReviewScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const CircleAvatar(backgroundColor: grey1,),
+                    const CircleAvatar(
+                      backgroundColor: grey1,
+                    ),
                     const SizedBox(
                       width: 10,
                     ),
@@ -128,9 +130,7 @@ class _FormReviewState extends State<FormReview> {
         _isLoading = true;
       });
       List<CustomerReview>? response = await ReviewService().postReview(
-          id: widget.id,
-          name: widget.userName,
-          review: reviewController.text);
+          id: widget.id, name: widget.userName, review: reviewController.text);
 
       if (response != null) {
         detailRestaurantProvider.setNewReview(newReview: response);

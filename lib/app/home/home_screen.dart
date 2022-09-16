@@ -22,7 +22,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
+    final NavigationProvider navigationProvider =
+        Provider.of<NavigationProvider>(context, listen: false);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: primary,
@@ -55,7 +56,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget appBar(BuildContext context, NavigationProvider navigationProvider) {
+  PreferredSizeWidget appBar(
+      BuildContext context, NavigationProvider navigationProvider) {
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: primary,
@@ -101,7 +103,7 @@ class HomeScreen extends StatelessWidget {
       ),
       actions: [
         InkWell(
-          onTap: (){
+          onTap: () {
             navigationProvider.setIndex(3);
           },
           child: Container(

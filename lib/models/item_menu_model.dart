@@ -7,7 +7,8 @@ class ItemMenuModel {
 
   final String name;
 
-  factory ItemMenuModel.fromJson(String str) => ItemMenuModel.fromMap(json.decode(str));
+  factory ItemMenuModel.fromJson(String str) =>
+      ItemMenuModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 

@@ -18,7 +18,9 @@ class OnBoardingScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.of(context).size.height - MediaQuery.of(context).viewPadding.top - 30,
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).viewPadding.top -
+                  30,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
