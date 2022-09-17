@@ -1,16 +1,17 @@
-# crestaurant2
+# Belajar Fundamental Aplikasi Flutter
+## CRestaurant Submission 2
 
-Submission Fundamental Flutter
+<img src="asset_git/review.png" width="750px"/>
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Screenshot App
+<div>
+    <img src="asset_git/01.jpg" width="250px"/>
+    <img src="asset_git/02.jpg" width="250px"/>
+    <img src="asset_git/03.jpg" width="250px"/>
+    <img src="asset_git/04.jpg" width="250px"/>
+    <img src="asset_git/05.jpg" width="250px"/>
+    <img src="asset_git/06.jpg" width="250px"/>
+    <img src="asset_git/07.jpg" width="250px"/>
+    <img src="asset_git/08.jpg" width="250px"/>
+    <img src="asset_git/09.jpg" width="250px"/>
+</div>
