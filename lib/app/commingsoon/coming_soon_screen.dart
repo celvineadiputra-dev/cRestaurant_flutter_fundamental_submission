@@ -3,6 +3,7 @@ import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ComingSoonScreen extends StatelessWidget {
   const ComingSoonScreen({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class ComingSoonScreen extends StatelessWidget {
               height: 15,
             ),
             Text(
-              "COMING SOON",
+              AppLocalizations.of(context)!.comingSoon,
               style: Theme.of(context)
                   .textTheme
                   .bodyText1
@@ -43,7 +44,7 @@ class ComingSoonScreen extends StatelessWidget {
                   onPress: () {
                     Navigator.pushReplacementNamed(context, '/search');
                   },
-                  label: "Search Nearby Restaurants"),
+                  label: AppLocalizations.of(context)!.searchNearby),
             )
           ],
         ),

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailScreen extends StatelessWidget {
   final Restaurant data;
@@ -258,7 +259,7 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
                   tabs: [
                     Tab(
                       child: Text(
-                        "Description",
+                        AppLocalizations.of(context)!.description,
                         style: Theme.of(context)
                             .textTheme
                             .button
@@ -267,7 +268,7 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
                     ),
                     Tab(
                       child: Text(
-                        "Foods",
+                        AppLocalizations.of(context)!.foods,
                         style: Theme.of(context)
                             .textTheme
                             .button
@@ -276,7 +277,7 @@ class _DetailRestaurantState extends State<DetailRestaurant> {
                     ),
                     Tab(
                       child: Text(
-                        "Drinks",
+                        AppLocalizations.of(context)!.drinks,
                         style: Theme.of(context)
                             .textTheme
                             .button
@@ -422,7 +423,7 @@ class RatingReview extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Rating and Review",
+              AppLocalizations.of(context)!.ratingReview,
               style: Theme.of(context)
                   .textTheme
                   .headline6!
@@ -438,7 +439,7 @@ class RatingReview extends StatelessWidget {
           height: 4,
         ),
         Text(
-          "Rating and review from awesome user",
+          AppLocalizations.of(context)!.subRatingReview,
           style: Theme.of(context)
               .textTheme
               .bodySmall!
@@ -553,7 +554,7 @@ class GiveReview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Give your review for this restaurant",
+                AppLocalizations.of(context)!.reviewTitle,
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
@@ -595,7 +596,7 @@ class GiveReview extends StatelessWidget {
                   Navigator.pushNamed(context, '/review');
                 },
                 child: Text(
-                  "Write review",
+                  AppLocalizations.of(context)!.writeReview,
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!

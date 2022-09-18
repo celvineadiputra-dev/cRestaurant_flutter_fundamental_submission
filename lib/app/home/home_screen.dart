@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class HomeScreen extends StatelessWidget {
           },
           style: const TextStyle(fontSize: 12),
           decoration: InputDecoration(
-            hintText: "Search your favorite restaurant",
+            hintText: AppLocalizations.of(context)!.searchBar,
             hintStyle:
                 const TextStyle(color: rockBottom, fontWeight: FontWeight.w500),
             filled: true,
@@ -293,7 +294,7 @@ class PopularRestaurantSection extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "Popular Restaurant",
+                AppLocalizations.of(context)!.popularRestaurant,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -305,7 +306,7 @@ class PopularRestaurantSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Lots of good restaurants, loh!",
+                AppLocalizations.of(context)!.subPopularRestaurant,
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                     color: dark, fontWeight: FontWeight.w700, fontSize: 15),
               ),
@@ -315,7 +316,7 @@ class PopularRestaurantSection extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: flesh, borderRadius: BorderRadius.circular(50)),
                 child: Text(
-                  "View All",
+                  AppLocalizations.of(context)!.viewAll,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       color: primary,
                       fontSize: 12,
@@ -423,7 +424,7 @@ class HottestDiscountSection extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "Hottest Discount",
+                AppLocalizations.of(context)!.hottestDiscount,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1
@@ -435,7 +436,7 @@ class HottestDiscountSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Big discounts awaits",
+                AppLocalizations.of(context)!.subHottestDiscount,
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                     color: dark, fontWeight: FontWeight.w700, fontSize: 15),
               ),
@@ -445,7 +446,7 @@ class HottestDiscountSection extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: flesh, borderRadius: BorderRadius.circular(50)),
                 child: Text(
-                  "View All",
+                  AppLocalizations.of(context)!.viewAll,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                       color: primary,
                       fontSize: 12,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../models/restaurant_model.dart';
 import '../detail/detail_screen.dart';
@@ -33,9 +34,9 @@ class SearchScreen extends StatelessWidget {
 
   PreferredSizeWidget appBarWidget(BuildContext context) {
     return AppBar(
-      title: const Text(
-        "Find Your Favorite Food",
-        style: TextStyle(color: dark),
+      title: Text(
+        AppLocalizations.of(context)!.findYourFavoriteFood,
+        style: const TextStyle(color: dark),
       ),
       centerTitle: true,
       backgroundColor: Colors.white,
@@ -206,7 +207,7 @@ class _SearchState extends State<Search> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Popular Search",
+                          AppLocalizations.of(context)!.popularSearch,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1

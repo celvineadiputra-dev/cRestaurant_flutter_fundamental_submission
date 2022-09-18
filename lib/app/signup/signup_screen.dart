@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/input_validation_util.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -34,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
                       .textTheme
                       .headline6
                       ?.copyWith(fontSize: 35)),
-              Text("Sign Up Now",
+              Text("${AppLocalizations.of(context)!.signUp} ${AppLocalizations.of(context)!.now}",
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -84,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "If you are old user /",
+          "${AppLocalizations.of(context)!.invitationSignIn} /",
           style: Theme.of(context).textTheme.bodyText1?.copyWith(color: grey1),
         ),
         const SizedBox(
@@ -102,7 +103,7 @@ class SignUpScreen extends StatelessWidget {
             );
           },
           child: Text(
-            "Sign In",
+            AppLocalizations.of(context)!.signIn,
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
@@ -189,13 +190,13 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
         children: [
           TextFormFieldWidget(
             valueController: nameController,
-            label: "User Name",
+            label: AppLocalizations.of(context)!.fullName,
             textInputType: TextInputType.name,
             validator: (val) {
               if (isNameValid(val!)) {
                 return null;
               }
-              return "User Name is not valid";
+              return AppLocalizations.of(context)!.notValid(AppLocalizations.of(context)!.fullName);
             },
           ),
           const SizedBox(
@@ -209,7 +210,7 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
               if (isEmailValid(val!)) {
                 return null;
               }
-              return "Email is valid";
+              return AppLocalizations.of(context)!.notValid("Email");
             },
           ),
           const SizedBox(
@@ -217,13 +218,13 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
           ),
           PasswordFormFieldWidget(
             valueController: passwordController,
-            label: "Password",
+            label: AppLocalizations.of(context)!.password,
             textInputType: TextInputType.visiblePassword,
             validator: (val) {
               if (isPasswordValid(val!)) {
                 return null;
               }
-              return "password is not valid";
+              return AppLocalizations.of(context)!.notValid(AppLocalizations.of(context)!.password);
             },
           ),
           const SizedBox(
@@ -260,7 +261,7 @@ class _FormSignUpState extends State<FormSignUp> with InputValidationUtil {
                 }
               }
             },
-            label: "Sign Up",
+            label: AppLocalizations.of(context)!.signUp,
             isLoading: isLoading,
           ),
           const SizedBox(

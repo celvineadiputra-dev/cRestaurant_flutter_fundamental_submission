@@ -25,6 +25,7 @@ dependencies:
   connectivity_plus: ^2.3.6+1
   shimmer: ^2.0.0
   expandable_text: ^2.3.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

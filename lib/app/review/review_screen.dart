@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ReviewScreen extends StatelessWidget {
   const ReviewScreen({Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class ReviewScreen extends StatelessWidget {
                   color: dark, fontSize: 14, fontWeight: FontWeight.w400),
             ),
             Text(
-              "Give your review",
+              AppLocalizations.of(context)!.giveYourReview,
               style: Theme.of(context).textTheme.subtitle2!.copyWith(
                   color: dark, fontSize: 12, fontWeight: FontWeight.w400),
             )
@@ -155,7 +156,7 @@ class _FormReviewState extends State<FormReview> {
           decoration: InputDecoration(
             filled: true,
             fillColor: grey2,
-            hintText: "Write your review for this restaurant",
+            hintText: AppLocalizations.of(context)!.reviewHint,
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
                 borderSide: BorderSide.none),

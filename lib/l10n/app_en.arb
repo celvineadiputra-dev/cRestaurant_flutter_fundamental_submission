@@ -3,5 +3,40 @@
   "signIn" : "Sign In",
   "signUp" : "Sign Up",
   "language" : "Language",
-  "selectYourLanguage" : "Select your language"
+  "selectYourLanguage" : "Select your language",
+  "comingSoon" : "COMING SOON",
+  "searchNearby" : "Search Nearby Restaurants",
+  "now" : "Now",
+  "invitationRegister" : "If you are new",
+  "invitationSignIn" : "If you are old user",
+  "createNewAccount" : "Create New Account",
+  "password" : "Password",
+  "forgotPassword" : "Forgot Password",
+  "reset" : "Reset",
+  "fullName" : "Full Name",
+  "notValid" : "{field} is not valid",
+  "@notValid" : {
+    "placeholders": {
+        "field": {
+          "type": "String"
+        }
+    }
+  },
+  "searchBar" : "Search your favorite restaurant",
+  "popularRestaurant" : "Popular Restaurant",
+  "subPopularRestaurant" : "Lots of good restaurants, loh!",
+  "hottestDiscount" : "hottest Discount",
+  "subHottestDiscount" : "Big discounts awaits",
+  "viewAll" : "View All",
+  "description" : "Description",
+  "foods" : "Foods",
+  "drinks" : "Drinks",
+  "reviewTitle" : "Give your review for this restaurant",
+  "writeReview" : "Write Review",
+  "ratingReview" : "Rating and Review",
+  "subRatingReview" : "Rating and review from awesome user",
+  "reviewHint" : "Write your review for this restaurant",
+  "giveYourReview" : "Give your review",
+  "findYourFavoriteFood" : "Find Your Favorite Food",
+  "popularSearch" : "Popular Search"
 }

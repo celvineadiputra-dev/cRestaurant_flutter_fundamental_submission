@@ -1,3 +1,4 @@
+import 'package:crestaurant2/app/widgets/language_widget.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
@@ -56,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                 height: 20,
               ),
               const Tile(icon: like, label: "My Favorite Restaurant"),
-              const Tile(icon: globe, label: "Change Language"),
+              const LanguageWidget(widget: Tile(icon: globe, label: "Change Language")),
               const Tile(icon: promotion, label: "Promotion"),
               const Tile(icon: help, label: "Help"),
               Row(
