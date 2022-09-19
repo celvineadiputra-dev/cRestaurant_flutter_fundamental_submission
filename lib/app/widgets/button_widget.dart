@@ -5,7 +5,7 @@ class ButtonWidget extends StatelessWidget {
   final void Function() onPress;
   final String label;
   final double verticalPadding;
-  final Color bgColor;
+  final Color bgColor, textColor;
   final bool isLoading;
 
   const ButtonWidget(
@@ -14,6 +14,7 @@ class ButtonWidget extends StatelessWidget {
       required this.label,
       this.verticalPadding = 20,
       this.isLoading = false,
+      this.textColor = Colors.white,
       this.bgColor = primary})
       : super(key: key);
 
@@ -35,7 +36,7 @@ class ButtonWidget extends StatelessWidget {
                   color: Colors.white,
                 ),
               )
-            : Text(label),
+            : Text(label, style: Theme.of(context).textTheme.button!.copyWith(color: textColor),),
       ),
     );
   }
