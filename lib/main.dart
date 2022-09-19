@@ -6,6 +6,7 @@ import 'package:crestaurant2/app/search/search_screen.dart';
 import 'package:crestaurant2/app/signin/signin_screen.dart';
 import 'package:crestaurant2/app/signup/signup_screen.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
+import 'package:crestaurant2/provider/database_provider.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/provider/language_provider.dart';
 import 'package:crestaurant2/provider/navigation_provider.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             create: (context) => RestaurantProvider()),
         ChangeNotifierProvider(create: (context) => DetailRestaurantProvider()),
         ChangeNotifierProvider(create: (context) => SearchRestaurantProvider()),
+        ChangeNotifierProvider(create: (context) => DatabaseProvider()),
       ],
       child: Consumer<LanguageProvider>(
         builder: (BuildContext context, language, _){

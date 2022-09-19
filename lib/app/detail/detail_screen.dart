@@ -1,8 +1,10 @@
+import 'package:crestaurant2/app/widgets/button_widget.dart';
 import 'package:crestaurant2/app/widgets/error_widget.dart';
 import 'package:crestaurant2/models/category_model.dart';
 import 'package:crestaurant2/models/customer_review_model.dart';
 import 'package:crestaurant2/models/item_menu_model.dart';
 import 'package:crestaurant2/models/restaurant_model.dart';
+import 'package:crestaurant2/provider/database_provider.dart';
 import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/Icons.dart';
@@ -10,6 +12,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -97,76 +100,117 @@ class InfoRestaurant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            data.name,
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .copyWith(fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  RatingBar(
-                    initialRating: data.rating,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 15,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(
-                          Icons.star,
-                          color: orange,
+    final DatabaseProvider databaseProvider =
+        Provider.of<DatabaseProvider>(context, listen: false);
+    return FutureBuilder<bool>(
+        future: databaseProvider.isWish(data.id),
+        builder: (context, snapshot) {
+          bool isWish = snapshot.data ?? false;
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data.name,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        RatingBar(
+                          initialRating: data.rating,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 15,
+                          ratingWidget: RatingWidget(
+                              full: const Icon(
+                                Icons.star,
+                                color: orange,
+                              ),
+                              half: const Icon(
+                                Icons.star_half,
+                                color: orange,
+                              ),
+                              empty: const Icon(
+                                Icons.star_border,
+                                color: grey1,
+                              )),
+                          onRatingUpdate: (double value) {},
                         ),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: orange,
+                        const SizedBox(
+                          width: 10,
                         ),
-                        empty: const Icon(
-                          Icons.star_border,
+                        Text(data.rating.toString())
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          map,
                           color: grey1,
-                        )),
-                    onRatingUpdate: (double value) {},
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(data.rating.toString())
-                ],
-              ),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    map,
-                    color: grey1,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    data.city,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  )
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          data.city,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ButtonWidget(
+                        onPress: () {
+                          Fluttertoast.showToast(msg: "Coming Soon");
+                        },
+                        label: "Open Google Map",
+                        bgColor: grey3,
+                        textColor: dark,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Consumer<DatabaseProvider>(
+                      builder: (context,
+                          DatabaseProvider databaseProviderConsumer, _) {
+                        return Expanded(
+                          child: ButtonWidget(
+                              onPress: () {
+                                databaseProvider.addToWishList(data);
+                              },
+                              label: databaseProviderConsumer.isWishValue
+                                  ? "Remove from wishlist"
+                                  : "Add to wishlist"),
+                        );
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        });
   }
 }
 
@@ -470,7 +514,15 @@ class RatingReview extends StatelessWidget {
                               const SizedBox(
                                 width: 10,
                               ),
-                              Text(review.name)
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                child: Text(
+                                  review.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                ),
+                              )
                             ],
                           ),
                           const Icon(
