@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:crestaurant2/app/main/main_screen.dart';
 import 'package:crestaurant2/app/onboarding/onboarding_screen.dart';
 import 'package:crestaurant2/app/profile/profile_screen.dart';
@@ -11,16 +14,36 @@ import 'package:crestaurant2/provider/detail_restaurant_provider.dart';
 import 'package:crestaurant2/provider/language_provider.dart';
 import 'package:crestaurant2/provider/navigation_provider.dart';
 import 'package:crestaurant2/provider/restaurant_provider.dart';
+import 'package:crestaurant2/provider/scheduling_provider.dart';
 import 'package:crestaurant2/provider/search_restaurant_provider.dart';
 import 'package:crestaurant2/themes/button_theme.dart';
 import 'package:crestaurant2/themes/text_theme.dart';
+import 'package:crestaurant2/utils/background_service.dart';
+import 'package:crestaurant2/utils/notification_util.dart';
 import 'package:crestaurant2/values/Colors.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final NotificationUtil notificationUtil = NotificationUtil();
+  final BackgroundService service = BackgroundService();
+
+  service.initializeIsolate();
+
+  if (Platform.isAndroid) {
+    await AndroidAlarmManager.initialize();
+  }
+
+  await notificationUtil.initNotifications(flutterLocalNotificationsPlugin);
+
   runApp(const MyApp());
 }
 
@@ -39,9 +62,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => DetailRestaurantProvider()),
         ChangeNotifierProvider(create: (context) => SearchRestaurantProvider()),
         ChangeNotifierProvider(create: (context) => DatabaseProvider()),
+        ChangeNotifierProvider(create: (context) => SchedulingProvider())
       ],
       child: Consumer<LanguageProvider>(
-        builder: (BuildContext context, language, _){
+        builder: (BuildContext context, language, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: "CRestaurant",

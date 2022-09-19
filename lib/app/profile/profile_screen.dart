@@ -1,5 +1,6 @@
 import 'package:crestaurant2/app/widgets/language_widget.dart';
 import 'package:crestaurant2/provider/auth_provider.dart';
+import 'package:crestaurant2/provider/scheduling_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
 import 'package:flutter/material.dart';
@@ -57,9 +58,25 @@ class ProfileScreen extends StatelessWidget {
                 height: 20,
               ),
               const Tile(icon: like, label: "My Favorite Restaurant"),
-              const LanguageWidget(widget: Tile(icon: globe, label: "Change Language")),
+              const LanguageWidget(
+                  widget: Tile(icon: globe, label: "Change Language")),
               const Tile(icon: promotion, label: "Promotion"),
               const Tile(icon: help, label: "Help"),
+              Material(
+                child: ListTile(
+                  title: Text("Sheduling"),
+                  trailing: Consumer<SchedulingProvider>(
+                    builder: (context, SchedulingProvider schedule, _) {
+                      return Switch.adaptive(
+                        value: schedule.isScheduled,
+                        onChanged: (value) async {
+                          schedule.scheduledRandom(value);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -26,9 +26,12 @@ dependencies:
   shimmer: ^2.0.0
   expandable_text: ^2.3.0
   shared_preferences: ^2.0.15
-  android_alarm_manager_plus: ^2.0.7
+  android_alarm_manager_plus: ^2.0.2
   sqflite: ^2.0.3+1
   flutter_slidable: ^2.0.0
+  flutter_local_notifications: ^9.7.0
+  intl: ^0.17.0
+  rxdart: ^0.27.5
 
 dev_dependencies:
   flutter_test:

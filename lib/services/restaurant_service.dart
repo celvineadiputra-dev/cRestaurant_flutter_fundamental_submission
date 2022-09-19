@@ -108,4 +108,27 @@ class RestaurantService {
       throw Exception(e);
     }
   }
+
+  Future<Restaurant> fetchRandomOne() async {
+    try {
+      print("FETCH DATA RANDOMG ONE");
+      List<Restaurant> listRestaurant = [];
+      final response = await http.get(Uri.parse("$baseUrl/list"));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        data['restaurants'].map((item) {
+          Restaurant model = Restaurant.fromMap(item);
+          listRestaurant.add(model);
+        }).toList();
+      }
+
+      Random random = Random();
+      int randomNumber = random.nextInt(listRestaurant.length);
+      return listRestaurant[randomNumber];
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
