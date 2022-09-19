@@ -6,12 +6,20 @@ class DatabaseProvider with ChangeNotifier {
   late DatabaseHelper databaseHelper = DatabaseHelper();
 
   late bool _isWish;
+  late List<Restaurant> _wishList;
 
   bool get isWishValue => _isWish;
 
+  List<Restaurant> get wishList => _wishList;
+
+  DatabaseProvider() {
+    getWishList();
+  }
+
   void getWishList() async {
     List<Restaurant> data = await databaseHelper.getWishList();
-    print(data[1].name);
+    _wishList = data;
+    notifyListeners();
   }
 
   void addToWishList(Restaurant restaurant) async {
@@ -30,6 +38,18 @@ class DatabaseProvider with ChangeNotifier {
     final isExist = await databaseHelper.findById(id);
     bool val = isExist.isNotEmpty;
     _isWish = val;
+    notifyListeners();
     return val;
+  }
+
+  Future<void> destroy(String id) async {
+    try {
+      await databaseHelper.destroy(id);
+      _isWish = false;
+      getWishList();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -32,6 +32,15 @@ class Restaurant {
         rating: json["rating"].toDouble(),
       );
 
+  factory Restaurant.fromMap2(Map<String, dynamic> json) => Restaurant(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        pictureId: json['pictureId'],
+        city: json["city"],
+        rating: json["rating"].toDouble(),
+      );
+
   Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,

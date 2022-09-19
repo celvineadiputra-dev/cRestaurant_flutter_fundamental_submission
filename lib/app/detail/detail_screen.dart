@@ -105,7 +105,6 @@ class InfoRestaurant extends StatelessWidget {
     return FutureBuilder<bool>(
         future: databaseProvider.isWish(data.id),
         builder: (context, snapshot) {
-          bool isWish = snapshot.data ?? false;
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -197,7 +196,9 @@ class InfoRestaurant extends StatelessWidget {
                         return Expanded(
                           child: ButtonWidget(
                               onPress: () {
-                                databaseProvider.addToWishList(data);
+                                databaseProvider.isWishValue
+                                    ? databaseProvider.destroy(data.id)
+                                    : databaseProvider.addToWishList(data);
                               },
                               label: databaseProviderConsumer.isWishValue
                                   ? "Remove from wishlist"

@@ -1,6 +1,7 @@
 import 'package:crestaurant2/app/commingsoon/coming_soon_screen.dart';
 import 'package:crestaurant2/app/home/home_screen.dart';
 import 'package:crestaurant2/app/profile/profile_screen.dart';
+import 'package:crestaurant2/app/wishlist/wishlist_screen.dart';
 import 'package:crestaurant2/provider/navigation_provider.dart';
 import 'package:crestaurant2/values/Colors.dart';
 import 'package:crestaurant2/values/icons.dart';
@@ -21,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> widgetPages = [
     const HomeScreen(),
-    const ComingSoonScreen(),
+    const WishListScreen(),
     const ComingSoonScreen(),
     const ProfileScreen(),
   ];

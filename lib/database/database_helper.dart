@@ -20,7 +20,7 @@ class DatabaseHelper {
       await db.execute('''CREATE TABLE $_tblWishList (
           id TEXT PRIMARY KEY NOT NULL,
           name TEXT NOT NULL,
-          pictureid TEXT NOT NULL,
+          pictureId TEXT NOT NULL,
           description TEXT NOT NULL,
           city TEXT NOT NULL,
           rating FLOAT NOT NULL)''');
@@ -40,7 +40,7 @@ class DatabaseHelper {
 
     List<Map<String, dynamic>> results = await db!.query(_tblWishList);
 
-    return results.map((e) => Restaurant.fromMap(e)).toList();
+    return results.map((e) => Restaurant.fromMap2(e)).toList();
   }
 
   Future<void> insertData(Restaurant data) async {
@@ -52,11 +52,18 @@ class DatabaseHelper {
   Future<Map> findById(String id) async {
     final db = await database;
 
-    List<Map<String, dynamic>> results = await db!.query(_tblWishList, where: 'id = ?', whereArgs: [id]);
+    List<Map<String, dynamic>> results =
+        await db!.query(_tblWishList, where: 'id = ?', whereArgs: [id]);
 
-    if(results.isNotEmpty){
+    if (results.isNotEmpty) {
       return results.first;
     }
     return {};
+  }
+
+  Future<void> destroy(String id) async {
+    final db = await database;
+
+    await db!.delete(_tblWishList, where: 'id = ?', whereArgs: [id]);
   }
 }
