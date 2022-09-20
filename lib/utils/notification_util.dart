@@ -42,7 +42,7 @@ class NotificationUtil {
       Restaurant restaurant) async {
     var channelId = "1";
     var channelName = "channel_01";
-    var channelDescription = "dicoding news channel";
+    var channelDescription = "CRestaurant";
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         channelId, channelName,
@@ -67,11 +67,7 @@ class NotificationUtil {
 
   void configureSelectNotificationSubject(String route) {
     selectNotificationSubject.stream.listen(
-      (String payload) async {
-        // var data = Restaurant.fromJson(json.decode(payload));
-        // var article = data.articles[0];
-        // Navigation.intentWithData(route, article);
-      },
+      (String payload) async {},
     );
   }
 }

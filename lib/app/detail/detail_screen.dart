@@ -103,8 +103,11 @@ class InfoRestaurant extends StatelessWidget {
     final DatabaseProvider databaseProvider =
         Provider.of<DatabaseProvider>(context, listen: false);
     return FutureBuilder<bool>(
-        future: databaseProvider.isWish(data.id),
-        builder: (context, snapshot) {
+      future: databaseProvider.isWish(data.id),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          return const CircularProgressIndicator();
+        } else {
           return Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -193,17 +196,44 @@ class InfoRestaurant extends StatelessWidget {
                     Consumer<DatabaseProvider>(
                       builder: (context,
                           DatabaseProvider databaseProviderConsumer, _) {
-                        return Expanded(
-                          child: ButtonWidget(
-                              onPress: () {
-                                databaseProvider.isWishValue
-                                    ? databaseProvider.destroy(data.id)
-                                    : databaseProvider.addToWishList(data);
-                              },
-                              label: databaseProviderConsumer.isWishValue
-                                  ? "Remove from wishlist"
-                                  : "Add to wishlist"),
-                        );
+                        switch (databaseProviderConsumer.state) {
+                          case ResultState.loading:
+                            return const CircularProgressIndicator(
+                              color: primary,
+                            );
+                          case ResultState.noData:
+                            return Expanded(
+                              child: ButtonWidget(
+                                  onPress: () {
+                                    databaseProvider.isWishValue
+                                        ? databaseProvider.destroy(data.id)
+                                        : databaseProvider.addToWishList(data);
+                                  },
+                                  label: databaseProviderConsumer.isWishValue
+                                      ? AppLocalizations.of(context)!
+                                          .removeWishlist
+                                      : AppLocalizations.of(context)!
+                                          .addWishlist),
+                            );
+                          case ResultState.hasData:
+                            return Expanded(
+                              child: ButtonWidget(
+                                  onPress: () {
+                                    databaseProvider.isWishValue
+                                        ? databaseProvider.destroy(data.id)
+                                        : databaseProvider.addToWishList(data);
+                                  },
+                                  label: databaseProviderConsumer.isWishValue
+                                      ? AppLocalizations.of(context)!
+                                          .removeWishlist
+                                      : AppLocalizations.of(context)!
+                                          .addWishlist),
+                            );
+                          default:
+                            return const CircularProgressIndicator(
+                              color: primary,
+                            );
+                        }
                       },
                     ),
                   ],
@@ -211,7 +241,9 @@ class InfoRestaurant extends StatelessWidget {
               ],
             ),
           );
-        });
+        }
+      },
+    );
   }
 }
 

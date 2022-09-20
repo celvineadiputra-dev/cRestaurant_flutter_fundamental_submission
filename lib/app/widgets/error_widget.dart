@@ -37,3 +37,15 @@ Widget errorCode() {
     ),
   );
 }
+
+Widget empty() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Center(
+      child: SvgPicture.asset(
+        emptyWishList,
+        width: 250,
+      ),
+    ),
+  );
+}

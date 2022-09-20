@@ -38,5 +38,7 @@
   "reviewHint" : "Write your review for this restaurant",
   "giveYourReview" : "Give your review",
   "findYourFavoriteFood" : "Find Your Favorite Food",
-  "popularSearch" : "Popular Search"
+  "popularSearch" : "Popular Search",
+  "addWishlist" : "Add to wishlist",
+  "removeWishlist" : "Remove from wishlist"
 }

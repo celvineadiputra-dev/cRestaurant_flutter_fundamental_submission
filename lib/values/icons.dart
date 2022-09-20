@@ -23,3 +23,4 @@ const focus = 'assets/images/interaction_design_amico.svg';
 const noConnectionImage = 'assets/images/no_connection.svg';
 const notFoundImage = 'assets/images/not_found.svg';
 const errorImage = 'assets/images/error.svg';
+const emptyWishList = 'assets/images/empty_wish_list.svg';

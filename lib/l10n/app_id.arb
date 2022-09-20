@@ -31,5 +31,7 @@
   "reviewHint" : "Tulis masukkan untuk restorant ini",
   "giveYourReview" : "Berikan masukkan kamu",
   "findYourFavoriteFood" : "Cari Makanan Kesukaan",
-  "popularSearch" : "Pencarian Populer"
+  "popularSearch" : "Pencarian Populer",
+  "addWishlist" : "Tambah kewishlist",
+  "removeWishlist" : "hapus dari wishlist"
 }
