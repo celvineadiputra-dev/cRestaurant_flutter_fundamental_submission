@@ -131,4 +131,23 @@ class RestaurantService {
       throw Exception(e);
     }
   }
+
+  Future<List<Restaurant>> fetchDataTest(http.Client client) async {
+    try {
+      List<Restaurant> listRestaurant = [];
+      final response = await client.get(Uri.parse("$baseUrl/list"));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        data['restaurants'].map((item) {
+          Restaurant model = Restaurant.fromMap(item);
+          listRestaurant.add(model);
+        }).toList();
+      }
+      return listRestaurant;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

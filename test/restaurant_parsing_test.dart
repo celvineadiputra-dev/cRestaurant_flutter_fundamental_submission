@@ -31,7 +31,7 @@ void main() {
       when(client.get(Uri.parse("https://restaurant-api.dicoding.dev/list")))
           .thenAnswer((_) async => http.Response(jsonEncode(mockData), 200));
 
-      expect(await RestaurantService().fetchData(), isA<List<Restaurant>>());
+      expect(await RestaurantService().fetchDataTest(client), isA<List<Restaurant>>());
     });
   });
 }

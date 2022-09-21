@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 class DatabaseProvider with ChangeNotifier {
   late DatabaseHelper databaseHelper = DatabaseHelper();
 
-  late bool _isWish;
+  late bool _isWish = false;
   late List<Restaurant> _wishList;
   late ResultState _state;
 
