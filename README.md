@@ -4,6 +4,16 @@
 
 <img src="asset_git/Review_dicoding.png" width="750px"/>
 
+<hr/>
+
+# Kriteria
+## Fitur yang harus ada pada aplikasi:
+
+1. Daftar restoran
+    - Menampilkan daftar restoran dengan informasi singkat.
+    - Data restoran menggunakan berkas JSON yang tersedia pada Resources.
+2. Detail restoran
+    - Menampilkan detail informasi ketika salah satu item ditekan.
 # Screenshot App
 
 <div>
