@@ -64,10 +64,12 @@ class ProfileScreen extends StatelessWidget {
               const Tile(icon: help, label: "Help"),
               Material(
                 child: ListTile(
-                  title: const Text("Scheduling"),
+                  tileColor: Colors.white,
+                  title: const Text("Notification"),
                   trailing: Consumer<SchedulingProvider>(
                     builder: (context, SchedulingProvider schedule, _) {
                       return Switch.adaptive(
+                        activeColor: primary,
                         value: schedule.isScheduled,
                         onChanged: (value) async {
                           schedule.scheduledRandom(value);
